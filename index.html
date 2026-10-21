@@ -277,32 +277,7 @@
           </section>
 
           <section class="form-step" data-step="3" aria-labelledby="stepTitle3" hidden>
-            <div class="form-section-label" id="stepTitle3"><span class="step">04</span><span>Choose an area / <span class="kh" lang="km">ជ្រើសរើសផ្នែក</span></span></div>
-            <p class="step-description">Select an area to rate and comment on. Change the selection to add feedback for another area. / <span class="kh" lang="km">ជ្រើសរើសផ្នែកដើម្បីវាយតម្លៃ និងផ្តល់មតិយោបល់។ អ្នកអាចប្តូរផ្នែកដើម្បីបន្ថែមមតិយោបល់ផ្សេងទៀត។</span></p>
-            <div class="field">
-              <label for="feedbackTopics">Feedback Area <span class="kh" lang="km">ផ្នែកដែលចង់ផ្តល់មតិយោបល់</span></label>
-              <div class="select-wrap">
-                <select id="feedbackTopics" name="feedbackTopics">
-                  <option value="" selected>Choose an area / ជ្រើសរើសផ្នែក</option>
-                  <option value="Reception & welcome" data-topic="welcome" data-kh="ការទទួលស្វាគមន៍ភ្ញៀវ">Reception & welcome / ការទទួលស្វាគមន៍ភ្ញៀវ</option>
-                  <option value="Staff friendliness" data-topic="staff" data-kh="ភាពរួសរាយរបស់បុគ្គលិក">Staff friendliness / ភាពរួសរាយរបស់បុគ្គលិក</option>
-                  <option value="Consultation & explanation" data-topic="consultation" data-kh="ការពិគ្រោះ និងការពន្យល់">Consultation & explanation / ការពិគ្រោះ និងការពន្យល់</option>
-                  <option value="Waiting time" data-topic="waiting" data-kh="ពេលវេលារង់ចាំ">Waiting time / ពេលវេលារង់ចាំ</option>
-                  <option value="Clinic cleanliness" data-topic="cleanliness" data-kh="អនាម័យ និងភាពស្អាត">Clinic cleanliness / អនាម័យ និងភាពស្អាត</option>
-                  <option value="Comfort & privacy" data-topic="comfort" data-kh="ផាសុកភាព និងឯកជនភាព">Comfort & privacy / ផាសុកភាព និងឯកជនភាព</option>
-                  <option value="Treatment quality" data-topic="treatment" data-kh="គុណភាពនៃការព្យាបាល">Treatment quality / គុណភាពនៃការព្យាបាល</option>
-                  <option value="Results" data-topic="results" data-kh="លទ្ធផល">Results / លទ្ធផល</option>
-                  <option value="Price & value" data-topic="price" data-kh="តម្លៃ និងភាពសមរម្យ">Price & value / តម្លៃ និងភាពសមរម្យ</option>
-                  <option value="Other" data-topic="other" data-kh="ផ្សេងៗ">Other / ផ្សេងៗ</option>
-                </select>
-              </div>
-              <p class="completion-hint" id="completionHint" aria-live="polite">Completed areas will show a blue check / <span class="kh" lang="km">ផ្នែកដែលបានបំពេញនឹងមានសញ្ញាធីកពណ៌ខៀវ</span></p>
-            </div>
-            <div class="topic-feedback-cards" id="topicFeedbackCards" aria-live="polite"></div>
-          </section>
-
-          <section class="form-step" data-step="4" aria-labelledby="stepTitle4" hidden>
-            <div class="form-section-label" id="stepTitle4"><span class="step">05</span><span>Anything else? / <span class="kh" lang="km">តើមានមតិយោបល់ផ្សេងទៀតទេ?</span></span></div>
+            <div class="form-section-label" id="stepTitle3"><span class="step">04</span><span>Anything else? / <span class="kh" lang="km">តើមានមតិយោបល់ផ្សេងទៀតទេ?</span></span></div>
             <div class="field">
               <label for="feedback">Additional Feedback <span class="kh" lang="km">មតិយោបល់បន្ថែម</span></label>
               <p class="feedback-helper">Add details about what went well or what we could improve. / <span class="kh" lang="km">សូមរៀបរាប់អំពីចំណុចដែលល្អ ឬចំណុចដែលយើងអាចកែលម្អ។</span></p>
@@ -357,8 +332,6 @@
     const formContent = document.getElementById('formContent');
     const brandHeader = document.getElementById('brandHeader');
     const successMessage = document.getElementById('successMessage');
-    const topicFeedbackCards = document.getElementById('topicFeedbackCards');
-    const topicResponses = new Map();
     const visitDateInput = document.getElementById('visitDate');
     const formSteps = [...document.querySelectorAll('.form-step')];
     const progressLabel = document.getElementById('progressLabel');
@@ -367,8 +340,6 @@
     const progressFill = document.getElementById('progressFill');
     const backButton = document.getElementById('backButton');
     const nextButton = document.getElementById('nextButton');
-    const topicSelect = document.getElementById('feedbackTopics');
-    const completionHint = document.getElementById('completionHint');
     const feedbackFocusSelect = document.getElementById('feedbackFocus');
     const additionalFeedbackSuggestion = document.getElementById('additionalFeedbackSuggestion');
     const additionalFeedback = document.getElementById('feedback');
@@ -385,26 +356,6 @@
         const value = Number(option.querySelector('input').value);
         option.querySelector('.star').classList.toggle('selected', value <= selected);
       });
-    }
-
-    function updateTopicCompletion() {
-      const options = [...topicSelect.querySelectorAll('option[data-topic]')];
-      const completed = options.filter((option) => {
-        const response = topicResponses.get(option.dataset.topic);
-        const done = Boolean(response?.rating && response.feedback.trim());
-        option.textContent = `${done ? '✓ ' : ''}${option.dataset.label}`;
-        return done;
-      }).length;
-      completionHint.innerHTML = `Completed areas: ${completed} / 10 <span class="kh" lang="km">ផ្នែកដែលបានបំពេញ៖ ${completed} / ១០</span>`;
-    }
-
-    function saveTopicResponse(card) {
-      const topic = card.dataset.topic;
-      if (!topic) return;
-      const rating = card.querySelector('.topic-rating-box input:checked')?.value || '';
-      const feedback = card.querySelector('textarea')?.value || '';
-      topicResponses.set(topic, { rating, feedback });
-      updateTopicCompletion();
     }
 
     function showStep(nextStep) {
@@ -443,45 +394,6 @@
     });
     backButton.addEventListener('click', () => showStep(currentStep - 1));
     showStep(0);
-
-    function makeRating(name, label, required = false) {
-      const fieldset = document.createElement('fieldset');
-      fieldset.className = 'topic-rating-fieldset';
-      const legend = document.createElement('legend');
-      legend.className = 'topic-rating-legend';
-      legend.textContent = label;
-      fieldset.append(legend);
-      const box = document.createElement('div');
-      box.className = 'topic-rating-box';
-      box.setAttribute('role', 'radiogroup');
-      box.setAttribute('aria-label', label);
-      for (let value = 1; value <= 5; value += 1) {
-        const option = document.createElement('label');
-        option.className = 'rating-option';
-        const radio = document.createElement('input');
-        radio.type = 'radio';
-        radio.name = name;
-        radio.value = String(value);
-        radio.required = required && value === 1;
-        radio.setAttribute('aria-label', `${value} ${value === 1 ? 'star' : 'stars'} / ${value} ផ្កាយ`);
-        const star = document.createElement('span');
-        star.className = 'star';
-        star.setAttribute('aria-hidden', 'true');
-        star.textContent = '★';
-        option.append(radio, star);
-        radio.addEventListener('change', () => {
-          refreshRating(box);
-          const card = box.closest('.topic-feedback-card');
-          if (card) {
-            updateSmartFeedback(card);
-            saveTopicResponse(card);
-          }
-        });
-        box.append(option);
-      }
-      fieldset.append(box);
-      return fieldset;
-    }
 
     const smartFeedbackOptions = {
       welcome: {
@@ -577,125 +489,6 @@
     feedbackFocusSelect.addEventListener('change', updateAdditionalFeedbackSuggestions);
     updateAdditionalFeedbackSuggestions();
 
-    function updateSmartFeedback(card) {
-      const rating = Number(card.querySelector('.topic-rating-box input:checked')?.value || 0);
-      const panel = card.querySelector('.smart-prompt-panel');
-      const list = card.querySelector('.smart-prompt-list');
-      list.replaceChildren();
-      panel.hidden = rating === 0;
-      if (!rating) return;
-
-      const topicPrompts = smartFeedbackOptions[card.dataset.topic] || smartFeedbackOptions.other;
-      const prompts = rating <= 2 ? topicPrompts.low : rating === 3 ? topicPrompts.middle : topicPrompts.high;
-
-      const select = document.createElement('select');
-      select.className = 'smart-prompt-select';
-      select.setAttribute('aria-label', 'Select a suggested comment / ជ្រើសរើសមតិយោបល់ជំនួយ');
-      const placeholder = document.createElement('option');
-      placeholder.value = '';
-      placeholder.textContent = 'Choose a prompt / ជ្រើសរើសឃ្លាជំនួយ';
-      placeholder.selected = true;
-      select.append(placeholder);
-      for (const prompt of prompts) {
-        const option = document.createElement('option');
-        option.value = prompt;
-        option.textContent = prompt;
-        select.append(option);
-      }
-      select.addEventListener('change', () => {
-        const prompt = select.value;
-        if (!prompt) return;
-        const textarea = card.querySelector('textarea');
-        const current = textarea.value.trim();
-        if (!current.includes(prompt)) textarea.value = current ? `${current}\n${prompt}` : prompt;
-        select.selectedIndex = 0;
-        saveTopicResponse(card);
-        textarea.focus();
-      });
-      list.append(select);
-    }
-
-    const topicDetailGuides = {
-      welcome: ['How were you greeted? Was check-in clear and smooth?', 'តើបុគ្គលិកស្វាគមន៍អ្នកយ៉ាងដូចម្តេច? តើការចុះឈ្មោះច្បាស់ និងរលូនទេ?'],
-      staff: ['Were staff kind, attentive, and helpful? Share an example.', 'តើបុគ្គលិករួសរាយ យកចិត្តទុកដាក់ និងជួយបានល្អទេ? សូមផ្តល់ឧទាហរណ៍។'],
-      consultation: ['Were the treatment, options, risks, and price explained clearly?', 'តើការព្យាបាល ជម្រើស ហានិភ័យ និងតម្លៃត្រូវបានពន្យល់ច្បាស់ទេ?'],
-      waiting: ['How long did you wait? Were delays communicated to you?', 'តើអ្នករង់ចាំរយៈពេលប៉ុន្មាន? តើមានការជូនដំណឹងពេលយឺតទេ?'],
-      cleanliness: ['How clean did the room, equipment, and treatment area feel?', 'តើបន្ទប់ ឧបករណ៍ និងកន្លែងព្យាបាលមានភាពស្អាតកម្រិតណា?'],
-      comfort: ['Did you feel comfortable and have enough privacy during care?', 'តើអ្នកមានផាសុកភាព និងមានឯកជនភាពគ្រប់គ្រាន់ពេលទទួលសេវាទេ?'],
-      treatment: ['How was the treatment process, comfort, and staff communication?', 'តើដំណើរការព្យាបាល ផាសុកភាព និងការប្រាស្រ័យទាក់ទងយ៉ាងដូចម្តេច?'],
-      results: ['Did the results match your expectations? What would you like reviewed?', 'តើលទ្ធផលស្របនឹងការរំពឹងទុកទេ? តើអ្នកចង់ឲ្យយើងពិនិត្យអ្វីបន្ថែម?'],
-      price: ['Were the full costs clear? Did the service feel worth the price?', 'តើតម្លៃសរុបច្បាស់ទេ? តើសេវាកម្មសមនឹងតម្លៃដែរឬទេ?'],
-      other: ['Tell us what happened, what went well, and what we can do better.', 'សូមប្រាប់យើងពីអ្វីដែលបានកើតឡើង ចំណុចដែលល្អ និងអ្វីដែលយើងអាចកែលម្អ។']
-    };
-
-    function updateTopicFeedback() {
-      const previousCard = topicFeedbackCards.querySelector('.topic-feedback-card');
-      if (previousCard) saveTopicResponse(previousCard);
-      topicFeedbackCards.replaceChildren();
-      const selectedOption = topicSelect.selectedOptions[0];
-      const topic = selectedOption?.dataset.topic;
-      if (!topic) return;
-
-      const card = document.createElement('section');
-      card.className = 'topic-feedback-card';
-      card.dataset.topic = topic;
-      const title = document.createElement('div');
-      title.className = 'topic-feedback-title';
-      title.textContent = selectedOption.value;
-      const khmer = document.createElement('span');
-      khmer.className = 'kh';
-      khmer.lang = 'km';
-      khmer.textContent = selectedOption.dataset.kh || '';
-      title.append(khmer);
-      card.append(title);
-      card.append(makeRating(`topicRating_${topic}`, 'Rate this area / វាយតម្លៃផ្នែកនេះ', true));
-
-      const detailLabel = document.createElement('label');
-      const detailId = `topicDetail_${topic}`;
-      detailLabel.htmlFor = detailId;
-      detailLabel.innerHTML = 'What went well? What could we improve? <span class="kh" lang="km">តើចំណុចណាដែលល្អ? តើមានអ្វីដែលយើងគួរកែលម្អ?</span>';
-      const guide = document.createElement('p');
-      guide.className = 'topic-detail-hint';
-      const guideText = topicDetailGuides[topic] || topicDetailGuides.other;
-      guide.innerHTML = `Helpful details / ចំណុចដែលអាចរៀបរាប់៖ ${guideText[0]}<span class="kh" lang="km">${guideText[1]}</span>`;
-      const detail = document.createElement('textarea');
-      detail.id = detailId;
-      detail.name = `topicFeedback_${topic}`;
-      detail.rows = 4;
-      detail.placeholder = 'Describe your experience and any change you recommend / សូមរៀបរាប់បទពិសោធន៍ និងការកែលម្អដែលអ្នកស្នើ';
-
-      const promptPanel = document.createElement('div');
-      promptPanel.className = 'smart-prompt-panel';
-      promptPanel.hidden = true;
-      const promptTitle = document.createElement('p');
-      promptTitle.className = 'smart-prompt-title';
-      promptTitle.textContent = `Quick comment ideas / ឃ្លាជំនួយសម្រាប់ ${selectedOption.dataset.kh || ''}`;
-      const promptList = document.createElement('div');
-      promptList.className = 'smart-prompt-list';
-      promptPanel.append(promptTitle, promptList);
-      card.append(promptPanel, guide, detailLabel, detail);
-      detail.addEventListener('input', () => saveTopicResponse(card));
-
-      const saved = topicResponses.get(topic);
-      if (saved) {
-        detail.value = saved.feedback;
-        if (saved.rating) {
-          const savedRating = card.querySelector(`.topic-rating-box input[value="${saved.rating}"]`);
-          if (savedRating) savedRating.checked = true;
-        }
-      }
-      topicFeedbackCards.append(card);
-      refreshRating(card.querySelector('.topic-rating-box'));
-      updateSmartFeedback(card);
-      saveTopicResponse(card);
-    }
-
-    topicSelect.querySelectorAll('option[data-topic]').forEach((option) => {
-      option.dataset.label = option.textContent;
-    });
-    topicSelect.addEventListener('change', updateTopicFeedback);
-    updateTopicCompletion();
-
     document.querySelectorAll('.rating-box input[type="radio"]').forEach((radio) => {
       radio.addEventListener('change', () => {
         refreshRating(radio.closest('.rating-box'));
@@ -706,13 +499,13 @@
     document.querySelectorAll('.rating-box').forEach(refreshRating);
 
     feedbackForm.addEventListener('change', (event) => {
-      const group = event.target.closest('.rating-box, .topic-rating-box');
+      const group = event.target.closest('.rating-box');
       if (group) refreshRating(group);
     });
 
     feedbackForm.addEventListener('pointerover', (event) => {
       const option = event.target.closest('.rating-option');
-      const group = option?.closest('.rating-box, .topic-rating-box');
+      const group = option?.closest('.rating-box');
       if (!group || !option) return;
       const hoverValue = Number(option.querySelector('input').value);
       group.querySelectorAll('.rating-option').forEach((item) => {
@@ -721,7 +514,7 @@
     });
 
     feedbackForm.addEventListener('pointerout', (event) => {
-      const group = event.target.closest('.rating-box, .topic-rating-box');
+      const group = event.target.closest('.rating-box');
       if (group && !group.contains(event.relatedTarget)) refreshRating(group);
     });
 
@@ -740,13 +533,7 @@
 
       try {
         const submissionData = new FormData(feedbackForm);
-        const completedTopics = [];
-        for (const [topic, response] of topicResponses) {
-          submissionData.set(`topicRating_${topic}`, response.rating);
-          submissionData.set(`topicFeedback_${topic}`, response.feedback);
-          if (response.rating && response.feedback.trim()) completedTopics.push(topic);
-        }
-        submissionData.set('completedTopics', completedTopics.join(', '));
+        submissionData.set('completedTopics', '');
 
         // Apps Script returns a cross-origin redirect. no-cors lets this simple form POST
         // reach the Web App; the opaque response does not expose HTTP status to the page.
