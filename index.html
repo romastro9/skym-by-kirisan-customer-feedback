@@ -402,13 +402,21 @@
         const submissionData = new FormData(feedbackForm);
         submissionData.set('completedTopics', '');
 
-        // Apps Script returns a cross-origin redirect. no-cors lets this simple form POST
-        // reach the Web App; the opaque response does not expose HTTP status to the page.
-        await fetch(scriptURL, {
+        const response = await fetch(scriptURL, {
           method: 'POST',
-          mode: 'no-cors',
+          mode: 'cors',
           body: submissionData
         });
+        let result;
+        try {
+          result = await response.json();
+        } catch {
+          throw new Error('The feedback service returned an unreadable response.');
+        }
+        if (!response.ok || !result || result.ok !== true) {
+          throw new Error(result && (result.message || result.error) || 'The feedback could not be saved.');
+        }
+
         formContent.hidden = true;
         brandHeader.hidden = true;
         successMessage.classList.add('show');
