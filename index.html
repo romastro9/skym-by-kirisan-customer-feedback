@@ -37,9 +37,9 @@
       font-family: 'Montserrat', 'Suwannaphum', sans-serif;
       -webkit-font-smoothing: antialiased;
     }
-    .page-shell { width: min(100%, 620px); }
-    .brand { text-align: center; margin: 0 0 24px; }
-    .brand-logo { display: block; width: min(250px, 76vw); height: auto; margin: 0 auto 7px; padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; mix-blend-mode: multiply; }
+    .page-shell { width: min(100%, 820px); margin-inline: auto; }
+    .brand { text-align: center; margin: 0 0 26px; }
+    .brand-logo { display: block; width: min(224px, 62vw); height: auto; margin: 0 auto 5px; padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; object-fit: contain; }
     .brand-name { margin: 0; color: var(--gold-deep); font-size: 10px; font-weight: 600; letter-spacing: .28em; }
     .brand-tagline { margin: 8px 0 0; color: var(--muted); font-size: 12px; line-height: 1.8; }
     .kh { display: block; margin-top: 2px; font-family: 'Suwannaphum', sans-serif; font-weight: 400; letter-spacing: 0; }
@@ -47,7 +47,18 @@
       overflow: hidden; background: var(--paper); border: 1px solid rgba(225,219,207,.8);
       border-top: 4px solid var(--gold); border-radius: 14px; box-shadow: var(--shadow);
     }
-    .card-inner { padding: 32px 38px 36px; }
+    .card-inner { padding: clamp(28px, 5vw, 48px) clamp(22px, 6vw, 58px) 42px; }
+    .details-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 20px; }
+    .field-wide { grid-column: 1 / -1; }
+    .form-section-label { display: flex; align-items: center; gap: 10px; margin: 22px 0 14px; color: var(--ink); font-size: 11px; font-weight: 700; letter-spacing: .045em; }
+    .form-section-label:first-of-type { margin-top: 0; }
+    .form-section-label .step { display: grid; width: 25px; height: 25px; place-items: center; flex: 0 0 25px; border: 1px solid rgba(197,160,89,.45); border-radius: 50%; color: var(--gold-deep); font-size: 10px; }
+    .form-section-label .kh { display: inline; margin: 0 0 0 4px; font-size: 11px; font-weight: 400; color: var(--muted); }
+    .field { min-width: 0; }
+    .rating-panel { padding: 18px 16px 14px; border: 1px solid #eee8dc; border-radius: 9px; background: #fbfaf7; }
+    .rating-panel legend { text-align: center; width: 100%; }
+    .rating-box { gap: 4px; }
+    .rating-option { min-width: 48px; min-height: 48px; display: inline-grid; place-items: center; padding: 4px; }
     .form-heading { margin: 0 0 9px; text-align: center; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(27px, 5vw, 34px); font-weight: 400; letter-spacing: -.025em; }
     .form-heading .kh, .success h2 .kh { margin-top: 4px; color: var(--muted); font-family: 'Suwannaphum', sans-serif; font-size: 16px; letter-spacing: 0; }
     .form-subtitle { max-width: 420px; margin: 0 auto 24px; color: var(--muted); text-align: center; font-size: 13px; line-height: 1.85; }
@@ -55,7 +66,7 @@
     label, legend { display: block; margin: 0 0 8px; font-size: 12px; font-weight: 600; letter-spacing: .015em; }
     label .kh, legend .kh { display: inline; margin-left: 5px; color: var(--muted); font-size: 12px; font-weight: 400; }
     input[type="text"], input[type="tel"], input[type="date"], select, textarea {
-      display: block; width: 100%; min-height: 47px; padding: 12px 14px;
+      display: block; width: 100%; min-height: 50px; padding: 12px 14px;
       border: 1px solid var(--line); border-radius: 7px; outline: 0;
       color: var(--ink); background-color: #fff; font: inherit; font-size: 13px;
       transition: border-color .18s ease, box-shadow .18s ease;
@@ -77,11 +88,11 @@
     .rating-hint { margin: 2px 0 0; text-align: center; color: var(--muted); font-size: 11px; }
     .detail-heading { margin: 0 0 7px; font-size: 12px; font-weight: 600; }
     .detail-help { margin: 0 0 13px; color: var(--muted); font-size: 11px; line-height: 1.7; }
-    .topic-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+    .topic-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
     .topic-choice { position: relative; display: block; margin: 0; cursor: pointer; }
     .topic-choice input { position: absolute; width: 1px; height: 1px; opacity: 0; }
     .topic-chip {
-      position: relative; min-height: 47px; padding: 9px 34px 9px 11px; display: flex; flex-direction: column; justify-content: center;
+      position: relative; min-height: 56px; padding: 9px 36px 9px 12px; display: flex; flex-direction: column; justify-content: center;
       border: 1px solid var(--line); border-radius: 7px; color: var(--ink); background: #fff;
       font-size: 11px; line-height: 1.45; transition: border-color .18s ease, background .18s ease, box-shadow .18s ease;
     }
@@ -90,7 +101,7 @@
     .topic-choice.is-complete .topic-chip::after { content: '✓'; position: absolute; top: 50%; right: 12px; transform: translateY(-50%); color: #2563eb; font-size: 17px; font-weight: 700; line-height: 1; }
     .topic-choice input:focus-visible + .topic-chip { outline: 3px solid var(--focus); outline-offset: 2px; }
     .topic-feedback-cards { display: grid; gap: 12px; margin-top: 14px; }
-    .topic-feedback-card { padding: 15px; border: 1px solid #eee8dc; border-radius: 8px; background: #fbfaf7; }
+    .topic-feedback-card { padding: 17px; border: 1px solid #eee8dc; border-radius: 9px; background: #fbfaf7; box-shadow: 0 4px 14px rgba(54,47,35,.025); }
     .topic-feedback-card .topic-chip { min-height: 0; margin: 0 0 12px; padding: 0; border: 0; background: transparent; font-size: 12px; font-weight: 600; }
     .topic-feedback-card .topic-chip .kh { font-size: 11px; }
     .topic-rating-legend { margin: 0 0 6px; color: var(--muted); font-size: 10px; font-weight: 500; text-align: center; }
@@ -120,15 +131,33 @@
     .success .kh { margin-top: 5px; font-size: 14px; }
     .footer { margin: 18px 0 0; text-align: center; color: #928d83; font-size: 10px; letter-spacing: .04em; }
     [hidden] { display: none !important; }
-    @media (max-width: 520px) {
-      body { padding: 24px 13px; }
+    @media (max-width: 600px) {
+      body { padding: 22px 13px 30px; }
+      .page-shell { width: 100%; }
       .brand { margin-bottom: 18px; }
-      .card-inner { padding: 29px 22px 30px; }
-      .form-subtitle { margin-bottom: 25px; }
-      .field { margin-bottom: 18px; }
+      .brand-logo { width: min(192px, 58vw); }
+      .card-inner { padding: 25px 20px 28px; }
+      .form-heading { font-size: 29px; }
+      .form-subtitle { margin-bottom: 22px; font-size: 12px; }
+      .details-grid { grid-template-columns: 1fr; column-gap: 0; }
+      .field-wide { grid-column: auto; }
+      .field { margin-bottom: 17px; }
+      input[type="text"], input[type="tel"], input[type="date"], select, textarea { font-size: 16px; }
+      .rating-panel { padding: 14px 10px 12px; }
+      .rating-option { min-width: 50px; min-height: 50px; }
       .star { font-size: 33px; }
-      .topic-grid { grid-template-columns: 1fr; }
+      .topic-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+      .topic-chip { min-height: 66px; padding: 8px 31px 8px 9px; font-size: 10px; }
+      .topic-chip .kh { font-size: 9px; }
       .topic-feedback-card { padding: 13px; }
+      .privacy-note { font-size: 11px; }
+    }
+    @media (max-width: 380px) {
+      .card-inner { padding: 22px 15px 24px; }
+      .topic-grid { grid-template-columns: 1fr; }
+      .topic-chip { min-height: 54px; font-size: 11px; }
+      .topic-chip .kh { font-size: 10px; }
+      .form-section-label { font-size: 10px; }
     }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }
   </style>
@@ -147,6 +176,8 @@
         <p class="form-subtitle">Your experience matters to us. Please take a moment to share your feedback.<span class="kh" lang="km">បទពិសោធន៍របស់អ្នកមានសារៈសំខាន់ចំពោះយើង។ សូមចំណាយពេលបន្តិចដើម្បីចែករំលែកមតិយោបល់។</span></p>
 
         <form id="feedbackForm">
+          <div class="form-section-label"><span class="step">01</span><span>Your visit / <span class="kh" lang="km">ព័ត៌មាននៃការមកទទួលសេវា</span></span></div>
+          <div class="details-grid">
           <div class="field">
             <label for="fullName">Full Name <span class="kh" lang="km">ឈ្មោះពេញ</span></label>
             <input id="fullName" name="fullName" type="text" autocomplete="name" placeholder="Enter your full name" required>
@@ -163,7 +194,7 @@
             <label for="visitDate">Visit Date <span class="kh" lang="km">កាលបរិច្ឆេទមកទទួលសេវា (ជាជម្រើស)</span></label>
             <input id="visitDate" name="visitDate" type="date" autocomplete="off">
           </div>
-          <div class="field">
+          <div class="field field-wide">
             <label for="service">Service Received <span class="kh" lang="km">សេវាកម្មដែលបានទទួល</span></label>
             <div class="select-wrap">
               <select id="service" name="service" required>
@@ -178,7 +209,9 @@
               </select>
             </div>
           </div>
-          <div class="field">
+          </div>
+          <div class="form-section-label"><span class="step">02</span><span>Rate your experience / <span class="kh" lang="km">វាយតម្លៃបទពិសោធន៍</span></span></div>
+          <div class="field rating-panel">
             <fieldset>
               <legend>Rating <span class="kh" lang="km">ការវាយតម្លៃ</span></legend>
               <div class="rating-box" role="radiogroup" aria-label="Rating / ការវាយតម្លៃ">
@@ -191,6 +224,7 @@
               <p class="rating-hint">Tap a star to rate your experience <span class="kh" lang="km">ចុចលើផ្កាយដើម្បីវាយតម្លៃបទពិសោធន៍របស់អ្នក</span></p>
             </fieldset>
           </div>
+          <div class="form-section-label"><span class="step">03</span><span>Tell us more / <span class="kh" lang="km">ផ្តល់មតិយោបល់លម្អិត</span></span></div>
           <div class="field">
             <fieldset>
               <legend class="detail-heading">Tell us about your visit <span class="kh" lang="km">សូមប្រាប់យើងអំពីបទពិសោធន៍របស់អ្នក</span></legend>
@@ -500,14 +534,11 @@
         }
         submissionData.set('completedTopics', completedTopics.join(', '));
 
-        // Apps Script ContentService responses are redirected to a Google host.
-        // no-cors lets the browser send this simple form request without a CORS preflight;
-        // the opaque response cannot expose an HTTP status to this page.
-        await fetch(scriptURL, {
+        const response = await fetch(scriptURL, {
           method: 'POST',
-          mode: 'no-cors',
           body: submissionData
         });
+        if (!response.ok) throw new Error(`Submission failed (${response.status})`);
         formContent.hidden = true;
         brandHeader.hidden = true;
         successMessage.classList.add('show');
