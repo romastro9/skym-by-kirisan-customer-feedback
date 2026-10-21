@@ -87,7 +87,7 @@
     }
     .topic-chip .kh { margin: 1px 0 0; color: var(--muted); font-size: 10px; }
     .topic-choice input:checked + .topic-chip { border-color: var(--gold); background: #fcf8ef; box-shadow: 0 0 0 2px var(--focus); }
-    .topic-choice input:checked + .topic-chip::after { content: '✓'; position: absolute; top: 50%; right: 12px; transform: translateY(-50%); color: #2563eb; font-size: 17px; font-weight: 700; line-height: 1; }
+    .topic-choice.is-complete .topic-chip::after { content: '✓'; position: absolute; top: 50%; right: 12px; transform: translateY(-50%); color: #2563eb; font-size: 17px; font-weight: 700; line-height: 1; }
     .topic-choice input:focus-visible + .topic-chip { outline: 3px solid var(--focus); outline-offset: 2px; }
     .topic-feedback-cards { display: grid; gap: 12px; margin-top: 14px; }
     .topic-feedback-card { padding: 15px; border: 1px solid #eee8dc; border-radius: 8px; background: #fbfaf7; }
@@ -194,7 +194,7 @@
           <div class="field">
             <fieldset>
               <legend class="detail-heading">Tell us about your visit <span class="kh" lang="km">សូមប្រាប់យើងអំពីបទពិសោធន៍របស់អ្នក</span></legend>
-              <p class="detail-help">Choose one part of your experience to comment on. <span class="kh" lang="km">ជ្រើសរើសផ្នែកមួយដែលអ្នកចង់ផ្តល់មតិយោបល់។</span></p>
+              <p class="detail-help">Choose an area, add a rating and comment, then look for its blue tick. <span class="kh" lang="km">ជ្រើសរើសផ្នែកមួយ វាយតម្លៃ និងបញ្ចូលមតិយោបល់ ដើម្បីបង្ហាញសញ្ញាធីកពណ៌ខៀវ។</span></p>
               <div class="topic-grid" id="feedbackTopics">
                 <label class="topic-choice"><input type="radio" name="feedbackTopics" value="Reception & welcome" data-topic="welcome"><span class="topic-chip">Reception & welcome<span class="kh" lang="km">ការទទួលស្វាគមន៍ភ្ញៀវ</span></span></label>
                 <label class="topic-choice"><input type="radio" name="feedbackTopics" value="Staff friendliness" data-topic="staff"><span class="topic-chip">Staff friendliness<span class="kh" lang="km">ភាពរួសរាយរបស់បុគ្គលិក</span></span></label>
@@ -236,6 +236,7 @@
     const brandHeader = document.getElementById('brandHeader');
     const successMessage = document.getElementById('successMessage');
     const topicFeedbackCards = document.getElementById('topicFeedbackCards');
+    const topicResponses = new Map();
     const visitDateInput = document.getElementById('visitDate');
     if (visitDateInput && !visitDateInput.value) {
       const now = new Date();
@@ -249,6 +250,17 @@
         const value = Number(option.querySelector('input').value);
         option.querySelector('.star').classList.toggle('selected', value <= selected);
       });
+    }
+
+    function saveTopicResponse(card) {
+      const topic = card.dataset.topic;
+      if (!topic) return;
+      const rating = card.querySelector('.topic-rating-box input:checked')?.value || '';
+      const feedback = card.querySelector('textarea')?.value || '';
+      topicResponses.set(topic, { rating, feedback });
+      const choice = [...document.querySelectorAll('#feedbackTopics input')]
+        .find((input) => input.dataset.topic === topic)?.closest('.topic-choice');
+      choice?.classList.toggle('is-complete', Boolean(rating && feedback.trim()));
     }
 
     function makeRating(name, label, required = false) {
@@ -279,7 +291,10 @@
         radio.addEventListener('change', () => {
           refreshRating(box);
           const card = box.closest('.topic-feedback-card');
-          if (card) updateSmartFeedback(card);
+          if (card) {
+            updateSmartFeedback(card);
+            saveTopicResponse(card);
+          }
         });
         box.append(option);
       }
@@ -331,12 +346,15 @@
         const current = textarea.value.trim();
         if (!current.includes(prompt)) textarea.value = current ? `${current}\n${prompt}` : prompt;
         select.selectedIndex = 0;
+        saveTopicResponse(card);
         textarea.focus();
       });
       list.append(select);
     }
 
     function updateTopicFeedback() {
+      const previousCard = topicFeedbackCards.querySelector('.topic-feedback-card');
+      if (previousCard) saveTopicResponse(previousCard);
       const selected = [...document.querySelectorAll('#feedbackTopics input:checked')];
       topicFeedbackCards.replaceChildren();
       for (const checkbox of selected) {
@@ -344,6 +362,7 @@
         const sourceLabel = checkbox.closest('label').querySelector('.topic-chip').cloneNode(true);
         const card = document.createElement('section');
         card.className = 'topic-feedback-card';
+        card.dataset.topic = topic;
         card.append(sourceLabel);
         card.append(makeRating(`topicRating_${topic}`, 'Rate this area / វាយតម្លៃផ្នែកនេះ', true));
         const detailLabel = document.createElement('label');
@@ -365,7 +384,19 @@
         promptList.className = 'smart-prompt-list';
         promptPanel.append(promptTitle, promptList);
         card.append(promptPanel, detailLabel, detail);
+        detail.addEventListener('input', () => saveTopicResponse(card));
+        const saved = topicResponses.get(topic);
+        if (saved) {
+          detail.value = saved.feedback;
+          if (saved.rating) {
+            const savedRating = card.querySelector(`.topic-rating-box input[value="${saved.rating}"]`);
+            if (savedRating) savedRating.checked = true;
+          }
+        }
         topicFeedbackCards.append(card);
+        refreshRating(card.querySelector('.topic-rating-box'));
+        updateSmartFeedback(card);
+        saveTopicResponse(card);
       }
     }
 
@@ -413,9 +444,18 @@
       submitButton.setAttribute('aria-busy', 'true');
 
       try {
+        const submissionData = new FormData(feedbackForm);
+        const completedTopics = [];
+        for (const [topic, response] of topicResponses) {
+          submissionData.set(`topicRating_${topic}`, response.rating);
+          submissionData.set(`topicFeedback_${topic}`, response.feedback);
+          if (response.rating && response.feedback.trim()) completedTopics.push(topic);
+        }
+        submissionData.set('completedTopics', completedTopics.join(', '));
+
         const response = await fetch(scriptURL, {
           method: 'POST',
-          body: new FormData(feedbackForm)
+          body: submissionData
         });
         if (!response.ok) throw new Error(`Submission failed (${response.status})`);
         formContent.hidden = true;
