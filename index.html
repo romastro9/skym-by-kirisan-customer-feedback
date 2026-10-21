@@ -176,6 +176,7 @@
       .rating-option { min-width: 50px; min-height: 50px; }
       .star { font-size: 33px; }
       .topic-feedback-card { padding: 13px; }
+      .topic-feedback-card textarea { min-height: 104px; }
       .step-description { margin-bottom: 16px; font-size: 11px; }
       .step-actions { gap: 8px; }
       .step-button { min-height: 50px; padding: 10px 12px; font-size: 11px; }
@@ -549,6 +550,20 @@
       list.append(select);
     }
 
+    const topicDetailGuides = {
+      welcome: ['How were you greeted? Was check-in clear and smooth?', 'តើបុគ្គលិកស្វាគមន៍អ្នកយ៉ាងដូចម្តេច? តើការចុះឈ្មោះច្បាស់ និងរលូនទេ?'],
+      staff: ['Were staff kind, attentive, and helpful? Share an example.', 'តើបុគ្គលិករួសរាយ យកចិត្តទុកដាក់ និងជួយបានល្អទេ? សូមផ្តល់ឧទាហរណ៍។'],
+      consultation: ['Were the treatment, options, risks, and price explained clearly?', 'តើការព្យាបាល ជម្រើស ហានិភ័យ និងតម្លៃត្រូវបានពន្យល់ច្បាស់ទេ?'],
+      waiting: ['How long did you wait? Were delays communicated to you?', 'តើអ្នករង់ចាំរយៈពេលប៉ុន្មាន? តើមានការជូនដំណឹងពេលយឺតទេ?'],
+      cleanliness: ['How clean did the room, equipment, and treatment area feel?', 'តើបន្ទប់ ឧបករណ៍ និងកន្លែងព្យាបាលមានភាពស្អាតកម្រិតណា?'],
+      comfort: ['Did you feel comfortable and have enough privacy during care?', 'តើអ្នកមានផាសុកភាព និងមានឯកជនភាពគ្រប់គ្រាន់ពេលទទួលសេវាទេ?'],
+      treatment: ['How was the treatment process, comfort, and staff communication?', 'តើដំណើរការព្យាបាល ផាសុកភាព និងការប្រាស្រ័យទាក់ទងយ៉ាងដូចម្តេច?'],
+      results: ['Did the results match your expectations? What would you like reviewed?', 'តើលទ្ធផលស្របនឹងការរំពឹងទុកទេ? តើអ្នកចង់ឲ្យយើងពិនិត្យអ្វីបន្ថែម?'],
+      price: ['Were the full costs clear? Did the service feel worth the price?', 'តើតម្លៃសរុបច្បាស់ទេ? តើសេវាកម្មសមនឹងតម្លៃដែរឬទេ?'],
+      aftercare: ['Were aftercare instructions and follow-up useful and timely?', 'តើការណែនាំថែទាំបន្ទាប់ និងការតាមដានមានប្រយោជន៍ និងទាន់ពេលទេ?'],
+      other: ['Tell us what happened, what went well, and what we can do better.', 'សូមប្រាប់យើងពីអ្វីដែលបានកើតឡើង ចំណុចដែលល្អ និងអ្វីដែលយើងអាចកែលម្អ។']
+    };
+
     function updateTopicFeedback() {
       const previousCard = topicFeedbackCards.querySelector('.topic-feedback-card');
       if (previousCard) saveTopicResponse(previousCard);
@@ -574,12 +589,16 @@
       const detailLabel = document.createElement('label');
       const detailId = `topicDetail_${topic}`;
       detailLabel.htmlFor = detailId;
-      detailLabel.innerHTML = 'Additional Feedback <span class="kh" lang="km">មតិយោបល់បន្ថែម</span>';
+      detailLabel.innerHTML = 'What went well? What could we improve? <span class="kh" lang="km">តើចំណុចណាដែលល្អ? តើមានអ្វីដែលយើងគួរកែលម្អ?</span>';
+      const guide = document.createElement('p');
+      guide.className = 'topic-detail-hint';
+      const guideText = topicDetailGuides[topic] || topicDetailGuides.other;
+      guide.innerHTML = `Helpful details / ចំណុចដែលអាចរៀបរាប់៖ ${guideText[0]}<span class="kh" lang="km">${guideText[1]}</span>`;
       const detail = document.createElement('textarea');
       detail.id = detailId;
       detail.name = `topicFeedback_${topic}`;
-      detail.rows = 2;
-      detail.placeholder = 'Tell us more about this area / សូមប្រាប់យើងបន្ថែមអំពីផ្នែកនេះ';
+      detail.rows = 4;
+      detail.placeholder = 'Describe your experience and any change you recommend / សូមរៀបរាប់បទពិសោធន៍ និងការកែលម្អដែលអ្នកស្នើ';
 
       const promptPanel = document.createElement('div');
       promptPanel.className = 'smart-prompt-panel';
@@ -590,7 +609,7 @@
       const promptList = document.createElement('div');
       promptList.className = 'smart-prompt-list';
       promptPanel.append(promptTitle, promptList);
-      card.append(promptPanel, detailLabel, detail);
+      card.append(promptPanel, guide, detailLabel, detail);
       detail.addEventListener('input', () => saveTopicResponse(card));
 
       const saved = topicResponses.get(topic);
