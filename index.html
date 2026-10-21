@@ -81,12 +81,13 @@
     .topic-choice { position: relative; display: block; margin: 0; cursor: pointer; }
     .topic-choice input { position: absolute; width: 1px; height: 1px; opacity: 0; }
     .topic-chip {
-      min-height: 47px; padding: 9px 11px; display: flex; flex-direction: column; justify-content: center;
+      position: relative; min-height: 47px; padding: 9px 34px 9px 11px; display: flex; flex-direction: column; justify-content: center;
       border: 1px solid var(--line); border-radius: 7px; color: var(--ink); background: #fff;
       font-size: 11px; line-height: 1.45; transition: border-color .18s ease, background .18s ease, box-shadow .18s ease;
     }
     .topic-chip .kh { margin: 1px 0 0; color: var(--muted); font-size: 10px; }
     .topic-choice input:checked + .topic-chip { border-color: var(--gold); background: #fcf8ef; box-shadow: 0 0 0 2px var(--focus); }
+    .topic-choice input:checked + .topic-chip::after { content: '✓'; position: absolute; top: 50%; right: 12px; transform: translateY(-50%); color: #2563eb; font-size: 17px; font-weight: 700; line-height: 1; }
     .topic-choice input:focus-visible + .topic-chip { outline: 3px solid var(--focus); outline-offset: 2px; }
     .topic-feedback-cards { display: grid; gap: 12px; margin-top: 14px; }
     .topic-feedback-card { padding: 15px; border: 1px solid #eee8dc; border-radius: 8px; background: #fbfaf7; }
