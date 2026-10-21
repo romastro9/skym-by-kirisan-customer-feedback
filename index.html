@@ -18,7 +18,7 @@
       --muted: #77736c;
       --line: #e9e4da;
       --paper: #fff;
-      --background: #f8f6f2;
+      --background: #f4f3f0;
       --focus: rgba(197, 160, 89, .2);
       --shadow: 0 14px 42px rgba(54, 47, 35, .08);
     }
@@ -30,10 +30,7 @@
       display: grid;
       place-items: center;
       color: var(--ink);
-      background:
-        radial-gradient(ellipse at 12% 8%, rgba(197,160,89,.09), transparent 34%),
-        radial-gradient(ellipse at 88% 94%, rgba(197,160,89,.08), transparent 32%),
-        var(--background);
+      background: var(--background);
       font-family: 'Montserrat', 'Suwannaphum', sans-serif;
       -webkit-font-smoothing: antialiased;
     }
@@ -50,8 +47,7 @@
     .card-inner { padding: clamp(28px, 5vw, 48px) clamp(22px, 6vw, 58px) 42px; }
     .details-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 20px; }
     .field-wide { grid-column: 1 / -1; }
-    .form-section-label { display: flex; align-items: center; gap: 10px; margin: 22px 0 14px; color: var(--ink); font-size: 11px; font-weight: 700; letter-spacing: .045em; }
-    .form-section-label:first-of-type { margin-top: 0; }
+    .form-section-label { display: flex; align-items: center; gap: 10px; grid-column: 1 / -1; margin: 0 0 2px; padding: 18px 20px; border: 1px solid var(--line); border-left: 4px solid var(--gold); border-radius: 9px; background: #fff; color: var(--ink); font-size: 12px; font-weight: 700; letter-spacing: .025em; }
     .form-section-label .step { display: grid; width: 25px; height: 25px; place-items: center; flex: 0 0 25px; border: 1px solid rgba(197,160,89,.45); border-radius: 50%; color: var(--gold-deep); font-size: 10px; }
     .form-section-label .kh { display: inline; margin: 0 0 0 4px; font-size: 11px; font-weight: 400; color: var(--muted); }
     .field { min-width: 0; }
@@ -63,6 +59,10 @@
     .form-heading .kh, .success h2 .kh { margin-top: 4px; color: var(--muted); font-family: 'Suwannaphum', sans-serif; font-size: 16px; letter-spacing: 0; }
     .form-subtitle { max-width: 420px; margin: 0 auto 24px; color: var(--muted); text-align: center; font-size: 13px; line-height: 1.85; }
     .field { margin: 0 0 20px; }
+    .form-step > .field { align-self: start; padding: 17px 18px 18px; border: 1px solid #e8e6e1; border-radius: 9px; background: #fff; box-shadow: 0 2px 7px rgba(40,38,34,.025); }
+    .form-step > .field:last-child { margin-bottom: 0; }
+    .form-step > .field label, .form-step > .field legend { margin-bottom: 12px; font-size: 13px; }
+    .form-step > .field label .kh, .form-step > .field legend .kh { display: block; margin: 3px 0 0; font-size: 12px; }
     label, legend { display: block; margin: 0 0 8px; font-size: 12px; font-weight: 600; letter-spacing: .015em; }
     label .kh, legend .kh { display: inline; margin-left: 5px; color: var(--muted); font-size: 12px; font-weight: 400; }
     input[type="text"], input[type="tel"], input[type="date"], select, textarea {
@@ -109,6 +109,8 @@
     .topic-rating-legend { margin: 0 0 6px; color: var(--muted); font-size: 10px; font-weight: 500; text-align: center; }
     .topic-rating-box { display: flex; justify-content: center; gap: 5px; margin-bottom: 12px; }
     .topic-feedback-card textarea { min-height: 78px; background: #fff; }
+    .topic-detail-hint { margin: 0 0 12px; padding: 11px 12px; border-left: 3px solid var(--gold); border-radius: 0 6px 6px 0; background: #fff; color: var(--muted); font-size: 11px; line-height: 1.75; }
+    .topic-detail-hint .kh { display: block; }
     .smart-prompt-panel { margin: 0 0 13px; }
     .smart-prompt-title { margin: 0 0 8px; color: var(--muted); font-size: 10px; font-weight: 600; line-height: 1.6; }
     .smart-prompt-list { display: block; }
@@ -165,12 +167,14 @@
       .brand-logo { width: min(180px, 54vw); }
       .brand-tagline { font-size: 11px; }
       .card-inner { padding: 22px 18px 22px; }
+      .form-section-label { padding: 15px 14px; }
       .form-heading { font-size: 28px; }
       .form-subtitle { margin-bottom: 20px; font-size: 12px; }
       .form-progress { margin-bottom: 20px; }
       .form-step { min-height: 330px; }
       .form-step[data-step="0"], .form-step[data-step="1"] { display: block; }
       .field { margin-bottom: 15px; }
+      .form-step > .field { padding: 15px 14px; margin-bottom: 12px; }
       input[type="text"], input[type="tel"], input[type="date"], select, textarea { min-height: 50px; font-size: 16px; }
       .rating-panel { padding: 14px 10px 12px; }
       .rating-option { min-width: 50px; min-height: 50px; }
