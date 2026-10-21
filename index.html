@@ -98,9 +98,9 @@
     .topic-feedback-card textarea { min-height: 78px; background: #fff; }
     .smart-prompt-panel { margin: 0 0 13px; }
     .smart-prompt-title { margin: 0 0 8px; color: var(--muted); font-size: 10px; font-weight: 600; line-height: 1.6; }
-    .smart-prompt-list { display: flex; flex-wrap: wrap; gap: 7px; }
-    .smart-prompt-chip { min-height: 34px; padding: 7px 10px; border: 1px solid #d7e4fb; border-radius: 999px; color: #315b98; background: #f5f9ff; font: inherit; font-size: 10px; line-height: 1.4; cursor: pointer; }
-    .smart-prompt-chip:hover, .smart-prompt-chip:focus-visible { border-color: #2563eb; background: #eaf2ff; outline: 0; }
+    .smart-prompt-list { display: block; }
+    select.smart-prompt-select { margin: 0; border-color: #d7e4fb; color: #315b98; background-color: #f5f9ff; font-size: 11px; }
+    select.smart-prompt-select:focus { border-color: #2563eb; }
     .feedback-private { padding: 12px 14px; border: 1px solid #eee8dc; border-radius: 7px; background: #fbfaf7; }
     .submit-button {
       width: 100%; min-height: 51px; margin-top: 5px; padding: 13px 20px;
@@ -310,19 +310,30 @@
               'Please keep doing this. / សូមបន្តរក្សាចំណុចល្អនេះ។'
             ];
 
+      const select = document.createElement('select');
+      select.className = 'smart-prompt-select';
+      select.setAttribute('aria-label', 'Select a suggested comment / ជ្រើសរើសមតិយោបល់ជំនួយ');
+      const placeholder = document.createElement('option');
+      placeholder.value = '';
+      placeholder.textContent = 'Choose a prompt / ជ្រើសរើសឃ្លាជំនួយ';
+      placeholder.selected = true;
+      select.append(placeholder);
       for (const prompt of prompts) {
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.className = 'smart-prompt-chip';
-        button.textContent = '+ ' + prompt;
-        button.addEventListener('click', () => {
-          const textarea = card.querySelector('textarea');
-          const current = textarea.value.trim();
-          if (!current.includes(prompt)) textarea.value = current ? `${current}\n${prompt}` : prompt;
-          textarea.focus();
-        });
-        list.append(button);
+        const option = document.createElement('option');
+        option.value = prompt;
+        option.textContent = prompt;
+        select.append(option);
       }
+      select.addEventListener('change', () => {
+        const prompt = select.value;
+        if (!prompt) return;
+        const textarea = card.querySelector('textarea');
+        const current = textarea.value.trim();
+        if (!current.includes(prompt)) textarea.value = current ? `${current}\n${prompt}` : prompt;
+        select.selectedIndex = 0;
+        textarea.focus();
+      });
+      list.append(select);
     }
 
     function updateTopicFeedback() {
@@ -349,7 +360,7 @@
         promptPanel.hidden = true;
         const promptTitle = document.createElement('p');
         promptTitle.className = 'smart-prompt-title';
-        promptTitle.textContent = 'Smart prompts based on your rating / ឃ្លាជំនួយផ្អែកលើការវាយតម្លៃ';
+        promptTitle.textContent = 'Select a suggested comment / ជ្រើសរើសមតិយោបល់ជំនួយ';
         const promptList = document.createElement('div');
         promptList.className = 'smart-prompt-list';
         promptPanel.append(promptTitle, promptList);
