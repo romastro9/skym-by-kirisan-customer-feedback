@@ -500,11 +500,14 @@
         }
         submissionData.set('completedTopics', completedTopics.join(', '));
 
-        const response = await fetch(scriptURL, {
+        // Apps Script ContentService responses are redirected to a Google host.
+        // no-cors lets the browser send this simple form request without a CORS preflight;
+        // the opaque response cannot expose an HTTP status to this page.
+        await fetch(scriptURL, {
           method: 'POST',
+          mode: 'no-cors',
           body: submissionData
         });
-        if (!response.ok) throw new Error(`Submission failed (${response.status})`);
         formContent.hidden = true;
         brandHeader.hidden = true;
         successMessage.classList.add('show');
