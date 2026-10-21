@@ -253,23 +253,9 @@
               <p class="feedback-helper">Add details about what went well or what we could improve. / <span class="kh" lang="km">សូមរៀបរាប់អំពីចំណុចដែលល្អ ឬចំណុចដែលយើងអាចកែលម្អ។</span></p>
               <textarea id="feedback" name="feedback" placeholder="Share anything else you would like us to know / សូមចែករំលែកមតិយោបល់ផ្សេងទៀត" rows="5"></textarea>
               <div class="additional-suggestions">
-                <div class="select-wrap">
-                  <select id="feedbackFocus" aria-label="Choose a feedback area for suggestions / ជ្រើសរើសផ្នែកសម្រាប់ឃ្លាជំនួយ">
-                    <option value="" selected>Choose a feedback area / ជ្រើសរើសផ្នែកមតិយោបល់</option>
-                    <option value="welcome">Reception & welcome / ការទទួលស្វាគមន៍ភ្ញៀវ</option>
-                    <option value="staff">Staff / បុគ្គលិក</option>
-                    <option value="consultation">Consultation & explanation / ការពិគ្រោះ និងការពន្យល់</option>
-                    <option value="waiting">Waiting time / ពេលវេលារង់ចាំ</option>
-                    <option value="cleanliness">Cleanliness / អនាម័យ និងភាពស្អាត</option>
-                    <option value="comfort">Comfort & privacy / ផាសុកភាព និងឯកជនភាព</option>
-                    <option value="treatment">Treatment / ការព្យាបាល</option>
-                    <option value="results">Results / លទ្ធផល</option>
-                    <option value="price">Price & value / តម្លៃ និងភាពសមរម្យ</option>
-                    <option value="other">Other / ផ្សេងៗ</option>
-                  </select>
-                </div>
+                <label for="additionalFeedbackSuggestion">Smart suggestions <span class="kh" lang="km">ឃ្លាជំនួយ</span></label>
                 <select id="additionalFeedbackSuggestion" class="smart-prompt-select" aria-label="Suggested feedback / ឃ្លាជំនួយសម្រាប់មតិយោបល់" disabled>
-                  <option value="">Rate your visit and choose an area to see suggestions / សូមដាក់ពិន្ទុ និងជ្រើសរើសផ្នែកដើម្បីមើលឃ្លាជំនួយ</option>
+                  <option value="">Rate your visit to see suggestions / សូមដាក់ពិន្ទុដើម្បីមើលឃ្លាជំនួយ</option>
                 </select>
               </div>
             </div>
@@ -299,7 +285,6 @@
     const brandHeader = document.getElementById('brandHeader');
     const successMessage = document.getElementById('successMessage');
     const visitDateInput = document.getElementById('visitDate');
-    const feedbackFocusSelect = document.getElementById('feedbackFocus');
     const additionalFeedbackSuggestion = document.getElementById('additionalFeedbackSuggestion');
     const additionalFeedback = document.getElementById('feedback');
     if (visitDateInput && !visitDateInput.value) {
@@ -317,77 +302,39 @@
     }
 
     const smartFeedbackOptions = {
-      welcome: {
-        low: ['Reception did not feel welcoming. / ការទទួលស្វាគមន៍មិនទាន់ល្អទេ។', 'Please make check-in smoother. / សូមធ្វើឲ្យការចុះឈ្មោះកាន់តែរលូន។'],
-        middle: ['The welcome was okay, but could be warmer. / ការទទួលស្វាគមន៍មធ្យម ប៉ុន្តែអាចកក់ក្តៅជាងនេះ។', 'Check-in could be quicker. / ការចុះឈ្មោះអាចរហ័សជាងនេះ។'],
-        high: ['Reception greeted me warmly. / បុគ្គលិកទទួលភ្ញៀវស្វាគមន៍ខ្ញុំយ៉ាងកក់ក្តៅ។', 'Check-in was quick and easy. / ការចុះឈ្មោះរហ័ស និងងាយស្រួល។']
-      },
-      staff: {
-        low: ['Staff could listen more carefully. / បុគ្គលិកគួរយកចិត្តទុកដាក់ស្តាប់បន្ថែម។', 'I would appreciate clearer communication. / ខ្ញុំចង់ឲ្យការប្រាស្រ័យទាក់ទងកាន់តែច្បាស់។'],
-        middle: ['Staff were helpful, but communication could improve. / បុគ្គលិកមានជំនួយ ប៉ុន្តែការប្រាស្រ័យទាក់ទងអាចប្រសើរជាងនេះ។', 'I would like more attention during my visit. / ខ្ញុំចង់បានការយកចិត្តទុកដាក់បន្ថែមពេលមកទទួលសេវា។'],
-        high: ['Staff were kind and attentive. / បុគ្គលិករួសរាយ និងយកចិត្តទុកដាក់។', 'My questions were answered clearly. / សំណួររបស់ខ្ញុំត្រូវបានឆ្លើយយ៉ាងច្បាស់។']
-      },
-      consultation: {
-        low: ['I need a clearer explanation before treatment. / ខ្ញុំត្រូវការការពន្យល់ច្បាស់ជាងនេះមុនព្យាបាល។', 'Please allow more time for questions. / សូមផ្តល់ពេលវេលាបន្ថែមសម្រាប់សំណួរ។'],
-        middle: ['Some details were clear, but I still had questions. / ព័ត៌មានខ្លះច្បាស់ ប៉ុន្តែខ្ញុំនៅមានសំណួរ។', 'I would like more explanation about my options. / ខ្ញុំចង់បានការពន្យល់បន្ថែមអំពីជម្រើសរបស់ខ្ញុំ។'],
-        high: ['The treatment and options were explained clearly. / ការព្យាបាល និងជម្រើសត្រូវបានពន្យល់ច្បាស់លាស់។', 'I felt listened to during the consultation. / ខ្ញុំមានអារម្មណ៍ថាត្រូវបានស្តាប់យកចិត្តទុកដាក់។']
-      },
-      waiting: {
-        low: ['I waited longer than expected. / ខ្ញុំបានរង់ចាំយូរជាងការរំពឹងទុក។', 'Please update customers when there is a delay. / សូមជូនដំណឹងអតិថិជននៅពេលមានការយឺតយ៉ាវ។'],
-        middle: ['The wait was acceptable, but could be shorter. / ពេលរង់ចាំអាចទទួលយកបាន ប៉ុន្តែអាចខ្លីជាងនេះ។', 'A wait-time update would be helpful. / ការជូនដំណឹងអំពីពេលរង់ចាំនឹងមានប្រយោជន៍។'],
-        high: ['I was seen on time. / ខ្ញុំបានទទួលសេវាតាមពេលវេលា។', 'The waiting area was comfortable. / កន្លែងរង់ចាំមានផាសុកភាព។']
-      },
-      cleanliness: {
-        low: ['Please improve cleanliness in the treatment room. / សូមកែលម្អអនាម័យនៅក្នុងបន្ទប់ព្យាបាល។', 'Please refresh shared areas between visits. / សូមសម្អាតកន្លែងប្រើរួមឲ្យបានស្អាតរវាងការមកទទួលសេវា។'],
-        middle: ['The clinic was generally clean, but some areas need attention. / គ្លីនិកជាទូទៅស្អាត ប៉ុន្តែមានកន្លែងខ្លះត្រូវយកចិត្តទុកដាក់។', 'More frequent cleaning would help. / ការសម្អាតឲ្យបានញឹកញាប់នឹងជួយបានច្រើន។'],
-        high: ['The clinic and treatment room were clean. / គ្លីនិក និងបន្ទប់ព្យាបាលស្អាត។', 'The space felt fresh and hygienic. / ទីកន្លែងមានអារម្មណ៍ស្រស់ស្អាត និងមានអនាម័យ។']
-      },
-      comfort: {
-        low: ['I did not feel fully comfortable during my visit. / ខ្ញុំមិនទាន់មានអារម្មណ៍ស្រួលពេញលេញក្នុងពេលមកទទួលសេវាទេ។', 'Please protect my privacy more during treatment. / សូមយកចិត្តទុកដាក់លើឯកជនភាពរបស់ខ្ញុំបន្ថែមពេលព្យាបាល។'],
-        middle: ['I felt mostly comfortable, but privacy could improve. / ខ្ញុំមានអារម្មណ៍ស្រួលជាទូទៅ ប៉ុន្តែឯកជនភាពអាចកែលម្អបាន។', 'A quieter treatment room would help. / បន្ទប់ព្យាបាលដែលស្ងប់ស្ងាត់ជាងនេះនឹងជួយបាន។'],
-        high: ['I felt comfortable and respected. / ខ្ញុំមានអារម្មណ៍ស្រួល និងត្រូវបានគោរព។', 'My privacy was handled well. / ឯកជនភាពរបស់ខ្ញុំត្រូវបានយកចិត្តទុកដាក់បានល្អ។']
-      },
-      treatment: {
-        low: ['Please explain each treatment step before starting. / សូមពន្យល់ជំហាននីមួយៗមុនចាប់ផ្តើមព្យាបាល។', 'The treatment felt less comfortable than expected. / ការព្យាបាលមិនសូវមានផាសុកភាពដូចការរំពឹងទុក។'],
-        middle: ['The treatment was okay; please check my comfort during it. / ការព្យាបាលមធ្យម សូមពិនិត្យផាសុកភាពរបស់ខ្ញុំក្នុងពេលព្យាបាល។', 'More explanation during the procedure would help. / ការពន្យល់បន្ថែមក្នុងពេលធ្វើនីតិវិធីនឹងមានប្រយោជន៍។'],
-        high: ['The treatment was gentle and well explained. / ការព្យាបាលទន់ភ្លន់ និងមានការពន្យល់ច្បាស់លាស់។', 'I felt comfortable throughout the procedure. / ខ្ញុំមានអារម្មណ៍ស្រួលពេញមួយដំណើរការព្យាបាល។']
-      },
-      results: {
-        low: ['I am not satisfied with my result so far. / ខ្ញុំមិនទាន់ពេញចិត្តនឹងលទ្ធផលនៅឡើយទេ។', 'I would like someone to review my result. / ខ្ញុំចង់ឲ្យបុគ្គលិកពិនិត្យលទ្ធផលរបស់ខ្ញុំ។'],
-        middle: ['I am still waiting to see my final result. / ខ្ញុំកំពុងរង់ចាំមើលលទ្ធផលចុងក្រោយ។', 'Please explain what I should expect next. / សូមពន្យល់ថាខ្ញុំគួររំពឹងអ្វីបន្ទាប់។'],
-        high: ['I am happy with my result so far. / ខ្ញុំពេញចិត្តនឹងលទ្ធផលរហូតមកដល់ពេលនេះ។', 'The result matched what I expected. / លទ្ធផលស្របតាមអ្វីដែលខ្ញុំបានរំពឹងទុក។']
-      },
-      price: {
-        low: ['Please explain the full price before treatment. / សូមពន្យល់តម្លៃសរុបមុនពេលព្យាបាល។', 'Some charges were not clear to me. / ការគិតថ្លៃខ្លះមិនទាន់ច្បាស់សម្រាប់ខ្ញុំ។'],
-        middle: ['Pricing was understandable, but could be clearer. / តម្លៃអាចយល់បាន ប៉ុន្តែអាចពន្យល់ឲ្យច្បាស់ជាងនេះ។', 'A written price breakdown would help. / បញ្ជីបំបែកតម្លៃជាលាយលក្ខណ៍អក្សរនឹងមានប្រយោជន៍។'],
-        high: ['The price was explained clearly. / តម្លៃត្រូវបានពន្យល់យ៉ាងច្បាស់។', 'The service felt worth the price. / សេវាកម្មសមនឹងតម្លៃ។']
-      },
-      other: {
-        low: ['Please follow up with me about my concern. / សូមតាមដានខ្ញុំអំពីកង្វល់នេះ។', 'Please improve this part of my visit. / សូមកែលម្អផ្នែកនេះនៃការមកទទួលសេវារបស់ខ្ញុំ។'],
-        middle: ['I have a question the team can help with. / ខ្ញុំមានសំណួរដែលក្រុមការងារអាចជួយបាន។', 'One small change would improve my visit. / ការកែលម្អតូចមួយអាចធ្វើឲ្យការមកទទួលសេវាកាន់តែល្អ។'],
-        high: ['Everything went well. / អ្វីៗដំណើរការបានល្អ។', 'Please keep providing this good service. / សូមបន្តផ្តល់សេវាកម្មល្អនេះ។']
-      }
+      low: [
+        'I was not fully satisfied with my visit. Please follow up with me about my concern. / ខ្ញុំមិនទាន់ពេញចិត្តនឹងការមកទទួលសេវាទេ។ សូមទាក់ទងមកខ្ញុំអំពីកង្វល់នេះ។',
+        'One part of my visit did not meet my expectations. I would appreciate a review. / ផ្នែកមួយនៃការមកទទួលសេវាមិនស្របតាមការរំពឹងទុករបស់ខ្ញុំទេ។ សូមជួយពិនិត្យឡើងវិញ។'
+      ],
+      middle: [
+        'My visit was okay. One improvement that would make it better is... / ការមកទទួលសេវារបស់ខ្ញុំមធ្យម។ ចំណុចមួយដែលអាចកែលម្អបានគឺ...',
+        'The team could improve my experience by... / ក្រុមការងារអាចធ្វើឲ្យបទពិសោធន៍របស់ខ្ញុំប្រសើរឡើងដោយ...'
+      ],
+      high: [
+        'I was satisfied with my visit. The part I appreciated most was... / ខ្ញុំពេញចិត្តនឹងការមកទទួលសេវារបស់ខ្ញុំ។ ចំណុចដែលខ្ញុំចូលចិត្តបំផុតគឺ...',
+        'Please continue the thoughtful service that made my visit positive. / សូមបន្តផ្តល់សេវាកម្មយកចិត្តទុកដាក់ដែលធ្វើឲ្យការមកទទួលសេវារបស់ខ្ញុំល្អ។'
+      ]
     };
 
     function updateAdditionalFeedbackSuggestions() {
       const rating = Number(document.querySelector('.rating-box input:checked')?.value || 0);
-      const topic = feedbackFocusSelect.value;
-      const promptSet = smartFeedbackOptions[topic];
       additionalFeedbackSuggestion.replaceChildren();
-      additionalFeedbackSuggestion.disabled = !rating || !promptSet;
+      additionalFeedbackSuggestion.disabled = !rating;
 
       const placeholder = document.createElement('option');
       placeholder.value = '';
       placeholder.selected = true;
-      placeholder.textContent = !rating
-        ? 'Rate your visit first / សូមដាក់ពិន្ទុបទពិសោធន៍ជាមុន'
-        : !topic
-          ? 'Choose an area to see suggestions / ជ្រើសរើសផ្នែកដើម្បីមើលឃ្លាជំនួយ'
-          : 'Choose a suggestion / ជ្រើសរើសឃ្លាជំនួយ';
+      placeholder.textContent = rating
+        ? 'Choose a suggestion / ជ្រើសរើសឃ្លាជំនួយ'
+        : 'Rate your visit to see suggestions / សូមដាក់ពិន្ទុដើម្បីមើលឃ្លាជំនួយ';
       additionalFeedbackSuggestion.append(placeholder);
-      if (!rating || !promptSet) return;
+      if (!rating) return;
 
-      const prompts = rating <= 2 ? promptSet.low : rating === 3 ? promptSet.middle : promptSet.high;
+      const prompts = rating <= 2
+        ? smartFeedbackOptions.low
+        : rating === 3
+          ? smartFeedbackOptions.middle
+          : smartFeedbackOptions.high;
       for (const prompt of prompts) {
         const option = document.createElement('option');
         option.value = prompt;
@@ -407,7 +354,6 @@
       additionalFeedbackSuggestion.selectedIndex = 0;
       additionalFeedback.focus();
     });
-    feedbackFocusSelect.addEventListener('change', updateAdditionalFeedbackSuggestions);
     updateAdditionalFeedbackSuggestions();
 
     document.querySelectorAll('.rating-box input[type="radio"]').forEach((radio) => {
