@@ -104,6 +104,8 @@
     .topic-feedback-card { padding: 17px; border: 1px solid #eee8dc; border-radius: 9px; background: #fbfaf7; box-shadow: 0 4px 14px rgba(54,47,35,.025); }
     .topic-feedback-card .topic-chip { min-height: 0; margin: 0 0 12px; padding: 0; border: 0; background: transparent; font-size: 12px; font-weight: 600; }
     .topic-feedback-card .topic-chip .kh { font-size: 11px; }
+    .topic-feedback-title { margin: 0 0 13px; font-size: 13px; font-weight: 700; line-height: 1.6; }
+    .topic-feedback-title .kh { display: block; color: var(--muted); font-size: 11px; font-weight: 400; }
     .topic-rating-legend { margin: 0 0 6px; color: var(--muted); font-size: 10px; font-weight: 500; text-align: center; }
     .topic-rating-box { display: flex; justify-content: center; gap: 5px; margin-bottom: 12px; }
     .topic-feedback-card textarea { min-height: 78px; background: #fff; }
@@ -123,6 +125,31 @@
     .submit-button:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
     .submit-button:disabled { cursor: wait; opacity: .76; }
     .privacy-note { margin: 14px 0 0; text-align: center; color: #77736c; font-size: 10px; line-height: 1.75; }
+    .form-progress { margin: 0 0 26px; }
+    .progress-copy { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 9px; color: var(--muted); font-size: 10px; font-weight: 600; }
+    .progress-track { height: 5px; overflow: hidden; border-radius: 99px; background: #eee9df; }
+    .progress-track span { display: block; width: 20%; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #b8904e, #d9bd80); transition: width .28s ease; }
+    .form-step { min-height: 345px; animation: step-enter .22s ease both; }
+    .form-step[data-step="0"], .form-step[data-step="1"] { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 20px; align-content: start; }
+    .form-step[data-step="0"] .form-section-label, .form-step[data-step="1"] .form-section-label,
+    .form-step[data-step="0"] .field:last-child, .form-step[data-step="1"] .field:last-child { grid-column: 1 / -1; }
+    .form-step[hidden] { display: none !important; }
+    @keyframes step-enter { from { opacity: .4; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    .step-description { margin: -4px 0 20px; color: var(--muted); font-size: 12px; line-height: 1.8; }
+    .completion-hint { margin: 9px 0 0; color: var(--muted); font-size: 10px; line-height: 1.7; }
+    .completion-hint .kh { display: inline; }
+    .step-actions { display: flex; align-items: center; gap: 12px; margin-top: 22px; }
+    .step-button { min-height: 50px; padding: 12px 18px; border: 1px solid var(--line); border-radius: 7px; background: #fff; color: var(--ink); font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; touch-action: manipulation; }
+    .step-button:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+    .step-button:disabled { opacity: .6; cursor: wait; }
+    .step-next, .submit-button { margin-left: auto; }
+    .step-next { min-width: 190px; border-color: var(--gold); background: var(--gold); color: #fff; }
+    .step-next:hover:not(:disabled) { background: var(--gold-deep); }
+    .step-back { min-width: 130px; }
+    .step-actions .submit-button { width: auto; min-width: 220px; margin-top: 0; }
+    .feedback-private { padding: 12px 14px; border: 1px solid #eee8dc; border-radius: 7px; background: #fbfaf7; }
+    .feedback-private .privacy-note { margin: 0; }
+    .topic-feedback-card .topic-chip .kh { display: block; }
     .success { display: none; padding: 60px 34px 66px; text-align: center; }
     .success.show { display: block; }
     .success-icon { width: 58px; height: 58px; margin: 0 auto 22px; display: grid; place-items: center; border: 1px solid rgba(197,160,89,.52); border-radius: 50%; color: var(--gold-deep); font-size: 25px; }
@@ -132,32 +159,36 @@
     .footer { margin: 18px 0 0; text-align: center; color: #928d83; font-size: 10px; letter-spacing: .04em; }
     [hidden] { display: none !important; }
     @media (max-width: 600px) {
-      body { padding: 22px 13px 30px; }
+      body { padding: 18px 12px 24px; }
       .page-shell { width: 100%; }
-      .brand { margin-bottom: 18px; }
-      .brand-logo { width: min(192px, 58vw); }
-      .card-inner { padding: 25px 20px 28px; }
-      .form-heading { font-size: 29px; }
-      .form-subtitle { margin-bottom: 22px; font-size: 12px; }
-      .details-grid { grid-template-columns: 1fr; column-gap: 0; }
-      .field-wide { grid-column: auto; }
-      .field { margin-bottom: 17px; }
-      input[type="text"], input[type="tel"], input[type="date"], select, textarea { font-size: 16px; }
+      .brand { margin-bottom: 16px; }
+      .brand-logo { width: min(180px, 54vw); }
+      .brand-tagline { font-size: 11px; }
+      .card-inner { padding: 22px 18px 22px; }
+      .form-heading { font-size: 28px; }
+      .form-subtitle { margin-bottom: 20px; font-size: 12px; }
+      .form-progress { margin-bottom: 20px; }
+      .form-step { min-height: 330px; }
+      .form-step[data-step="0"], .form-step[data-step="1"] { display: block; }
+      .field { margin-bottom: 15px; }
+      input[type="text"], input[type="tel"], input[type="date"], select, textarea { min-height: 50px; font-size: 16px; }
       .rating-panel { padding: 14px 10px 12px; }
       .rating-option { min-width: 50px; min-height: 50px; }
       .star { font-size: 33px; }
-      .topic-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-      .topic-chip { min-height: 66px; padding: 8px 31px 8px 9px; font-size: 10px; }
-      .topic-chip .kh { font-size: 9px; }
       .topic-feedback-card { padding: 13px; }
-      .privacy-note { font-size: 11px; }
+      .step-description { margin-bottom: 16px; font-size: 11px; }
+      .step-actions { gap: 8px; }
+      .step-button { min-height: 50px; padding: 10px 12px; font-size: 11px; }
+      .step-back { min-width: 105px; }
+      .step-next { min-width: 0; flex: 1; }
+      .step-actions .submit-button { min-width: 0; flex: 1; padding-inline: 10px; font-size: 10px; letter-spacing: .06em; }
     }
     @media (max-width: 380px) {
-      .card-inner { padding: 22px 15px 24px; }
-      .topic-grid { grid-template-columns: 1fr; }
-      .topic-chip { min-height: 54px; font-size: 11px; }
-      .topic-chip .kh { font-size: 10px; }
-      .form-section-label { font-size: 10px; }
+      .card-inner { padding: 20px 15px 20px; }
+      .form-heading { font-size: 26px; }
+      .form-step { min-height: 315px; }
+      .step-button { font-size: 10px; }
+      .step-back { min-width: 96px; }
     }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }
   </style>
@@ -175,90 +206,112 @@
         <h1 class="form-heading" id="formTitle">Customer Feedback<span class="kh" lang="km">មតិយោបល់អតិថិជន</span></h1>
         <p class="form-subtitle">Your experience matters to us. Please take a moment to share your feedback.<span class="kh" lang="km">បទពិសោធន៍របស់អ្នកមានសារៈសំខាន់ចំពោះយើង។ សូមចំណាយពេលបន្តិចដើម្បីចែករំលែកមតិយោបល់។</span></p>
 
-        <form id="feedbackForm">
-          <div class="form-section-label"><span class="step">01</span><span>Your visit / <span class="kh" lang="km">ព័ត៌មាននៃការមកទទួលសេវា</span></span></div>
-          <div class="details-grid">
-          <div class="field">
-            <label for="fullName">Full Name <span class="kh" lang="km">ឈ្មោះពេញ</span></label>
-            <input id="fullName" name="fullName" type="text" autocomplete="name" placeholder="Enter your full name" required>
+        <form id="feedbackForm" novalidate>
+          <div class="form-progress" aria-label="Form progress">
+            <div class="progress-copy"><span id="progressLabel">Step 1 of 5 / ជំហានទី ១ នៃ ៥</span><span id="progressPercent">20%</span></div>
+            <div class="progress-track" id="progressTrack" role="progressbar" aria-label="Form progress / វឌ្ឍនភាពបែបបទ" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1"><span id="progressFill"></span></div>
           </div>
-          <div class="field">
-            <label for="position">Position <span class="kh" lang="km">មុខតំណែង (ជាជម្រើស)</span></label>
-            <input id="position" name="position" type="text" autocomplete="organization-title" placeholder="Your position (optional) / មុខតំណែងរបស់អ្នក (ជាជម្រើស)">
-          </div>
-          <div class="field">
-            <label for="phone">Phone Number <span class="kh" lang="km">លេខទូរស័ព្ទ</span></label>
-            <input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="Enter your phone number" required>
-          </div>
-          <div class="field">
-            <label for="visitDate">Visit Date <span class="kh" lang="km">កាលបរិច្ឆេទមកទទួលសេវា (ជាជម្រើស)</span></label>
-            <input id="visitDate" name="visitDate" type="date" autocomplete="off">
-          </div>
-          <div class="field">
-            <label for="branch">Branch Visited <span class="kh" lang="km">សាខាដែលបានទទួលសេវា</span></label>
-            <div class="select-wrap">
-              <select id="branch" name="branch" required>
-                <option value="Vivean Ekreach" selected>Vivean Ekreach</option>
-              </select>
+
+          <section class="form-step is-active" data-step="0" aria-labelledby="stepTitle0">
+            <div class="form-section-label" id="stepTitle0"><span class="step">01</span><span>About you / <span class="kh" lang="km">ព័ត៌មានរបស់អ្នក</span></span></div>
+            <div class="field">
+              <label for="fullName">Full Name <span class="kh" lang="km">ឈ្មោះពេញ</span></label>
+              <input id="fullName" name="fullName" type="text" autocomplete="name" placeholder="Enter your full name / បញ្ចូលឈ្មោះពេញ" required>
             </div>
-          </div>
-          <div class="field">
-            <label for="service">Service Received <span class="kh" lang="km">សេវាកម្មដែលបានទទួល</span></label>
-            <div class="select-wrap">
-              <select id="service" name="service" required>
-                <option value="" disabled selected>Select a service</option>
-                <option>Laser Treatment</option>
-                <option>HIFU</option>
-                <option>Injectables / Botox</option>
-                <option>Fat Freezing</option>
-                <option>IV Therapy / NAD+</option>
-                <option>Facial Treatment</option>
-                <option>Other</option>
-              </select>
+            <div class="field">
+              <label for="phone">Phone Number <span class="kh" lang="km">លេខទូរស័ព្ទ</span></label>
+              <input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="Enter your phone number / បញ្ចូលលេខទូរស័ព្ទ" required>
             </div>
-          </div>
-          </div>
-          <div class="form-section-label"><span class="step">02</span><span>Rate your experience / <span class="kh" lang="km">វាយតម្លៃបទពិសោធន៍</span></span></div>
-          <div class="field rating-panel">
-            <fieldset>
-              <legend>Rating <span class="kh" lang="km">ការវាយតម្លៃ</span></legend>
-              <div class="rating-box" role="radiogroup" aria-label="Rating / ការវាយតម្លៃ">
-                <label class="rating-option" aria-label="1 star"><input type="radio" name="rating" value="1" required><span class="star" aria-hidden="true">★</span></label>
-                <label class="rating-option" aria-label="2 stars"><input type="radio" name="rating" value="2"><span class="star" aria-hidden="true">★</span></label>
-                <label class="rating-option" aria-label="3 stars"><input type="radio" name="rating" value="3"><span class="star" aria-hidden="true">★</span></label>
-                <label class="rating-option" aria-label="4 stars"><input type="radio" name="rating" value="4"><span class="star" aria-hidden="true">★</span></label>
-                <label class="rating-option" aria-label="5 stars"><input type="radio" name="rating" value="5"><span class="star" aria-hidden="true">★</span></label>
+            <div class="field">
+              <label for="position">Position <span class="kh" lang="km">មុខតំណែង (ជាជម្រើស)</span></label>
+              <input id="position" name="position" type="text" autocomplete="organization-title" placeholder="Your position / មុខតំណែងរបស់អ្នក (optional / ជាជម្រើស)">
+            </div>
+          </section>
+
+          <section class="form-step" data-step="1" aria-labelledby="stepTitle1" hidden>
+            <div class="form-section-label" id="stepTitle1"><span class="step">02</span><span>Your visit / <span class="kh" lang="km">ព័ត៌មាននៃការមកទទួលសេវា</span></span></div>
+            <div class="field">
+              <label for="visitDate">Visit Date <span class="kh" lang="km">កាលបរិច្ឆេទទទួលសេវា</span></label>
+              <input id="visitDate" name="visitDate" type="date" autocomplete="off">
+            </div>
+            <div class="field">
+              <label for="branch">Branch Visited <span class="kh" lang="km">សាខាដែលបានទទួលសេវា</span></label>
+              <div class="select-wrap">
+                <select id="branch" name="branch" required><option value="Vivean Ekreach" selected>Vivean Ekreach</option></select>
               </div>
-              <p class="rating-hint">Tap a star to rate your experience <span class="kh" lang="km">ចុចលើផ្កាយដើម្បីវាយតម្លៃបទពិសោធន៍របស់អ្នក</span></p>
-            </fieldset>
-          </div>
-          <div class="form-section-label"><span class="step">03</span><span>Tell us more / <span class="kh" lang="km">ផ្តល់មតិយោបល់លម្អិត</span></span></div>
-          <div class="field">
-            <fieldset>
-              <legend class="detail-heading">Tell us about your visit <span class="kh" lang="km">សូមប្រាប់យើងអំពីបទពិសោធន៍របស់អ្នក</span></legend>
-              <p class="detail-help">Choose an area, add a rating and comment, then look for its blue tick. <span class="kh" lang="km">ជ្រើសរើសផ្នែកមួយ វាយតម្លៃ និងបញ្ចូលមតិយោបល់ ដើម្បីបង្ហាញសញ្ញាធីកពណ៌ខៀវ។</span></p>
-              <div class="topic-grid" id="feedbackTopics">
-                <label class="topic-choice"><input type="radio" name="feedbackTopics" value="Reception & welcome" data-topic="welcome"><span class="topic-chip">Reception & welcome<span class="kh" lang="km">ការទទួលស្វាគមន៍ភ្ញៀវ</span></span></label>
-                <label class="topic-choice"><input type="radio" name="feedbackTopics" value="Staff friendliness" data-topic="staff"><span class="topic-chip">Staff friendliness<span class="kh" lang="km">ភាពរួសរាយរបស់បុគ្គលិក</span></span></label>
-                <label class="topic-choice"><input type="radio" name="feedbackTopics" value="Consultation & explanation" data-topic="consultation"><span class="topic-chip">Consultation & explanation<span class="kh" lang="km">ការពិគ្រោះ និងការពន្យល់</span></span></label>
-                <label class="topic-choice"><input type="radio" name="feedbackTopics" value="Waiting time" data-topic="waiting"><span class="topic-chip">Waiting time<span class="kh" lang="km">ពេលវេលារង់ចាំ</span></span></label>
-                <label class="topic-choice"><input type="radio" name="feedbackTopics" value="Clinic cleanliness" data-topic="cleanliness"><span class="topic-chip">Clinic cleanliness<span class="kh" lang="km">អនាម័យ និងភាពស្អាត</span></span></label>
-                <label class="topic-choice"><input type="radio" name="feedbackTopics" value="Comfort & privacy" data-topic="comfort"><span class="topic-chip">Comfort & privacy<span class="kh" lang="km">ផាសុកភាព និងឯកជនភាព</span></span></label>
-                <label class="topic-choice"><input type="radio" name="feedbackTopics" value="Treatment quality" data-topic="treatment"><span class="topic-chip">Treatment quality<span class="kh" lang="km">គុណភាពនៃការព្យាបាល</span></span></label>
-                <label class="topic-choice"><input type="radio" name="feedbackTopics" value="Results" data-topic="results"><span class="topic-chip">Results<span class="kh" lang="km">លទ្ធផល</span></span></label>
-                <label class="topic-choice"><input type="radio" name="feedbackTopics" value="Price & value" data-topic="price"><span class="topic-chip">Price & value<span class="kh" lang="km">តម្លៃ និងភាពសមរម្យ</span></span></label>
-                <label class="topic-choice"><input type="radio" name="feedbackTopics" value="Aftercare & follow-up" data-topic="aftercare"><span class="topic-chip">Aftercare & follow-up<span class="kh" lang="km">ការថែទាំ និងតាមដានបន្ទាប់</span></span></label>
-                <label class="topic-choice"><input type="radio" name="feedbackTopics" value="Other" data-topic="other"><span class="topic-chip">Other<span class="kh" lang="km">ផ្សេងៗ</span></span></label>
+            </div>
+            <div class="field">
+              <label for="service">Service Received <span class="kh" lang="km">សេវាកម្មដែលបានទទួល</span></label>
+              <div class="select-wrap">
+                <select id="service" name="service" required>
+                  <option value="" disabled selected>Select a service / ជ្រើសរើសសេវាកម្ម</option>
+                  <option>Laser Treatment</option><option>HIFU</option><option>Injectables / Botox</option>
+                  <option>Fat Freezing</option><option>IV Therapy / NAD+</option><option>Facial Treatment</option><option>Other</option>
+                </select>
               </div>
-              <div class="topic-feedback-cards" id="topicFeedbackCards" aria-live="polite"></div>
-            </fieldset>
+            </div>
+          </section>
+
+          <section class="form-step" data-step="2" aria-labelledby="stepTitle2" hidden>
+            <div class="form-section-label" id="stepTitle2"><span class="step">03</span><span>Rate your experience / <span class="kh" lang="km">វាយតម្លៃបទពិសោធន៍</span></span></div>
+            <p class="step-description">How was your visit overall? / <span class="kh" lang="km">តើបទពិសោធន៍ទូទៅរបស់អ្នកយ៉ាងដូចម្តេច?</span></p>
+            <div class="field rating-panel">
+              <fieldset>
+                <legend>Overall Rating <span class="kh" lang="km">ការវាយតម្លៃទូទៅ</span></legend>
+                <div class="rating-box" role="radiogroup" aria-label="Overall rating / ការវាយតម្លៃទូទៅ">
+                  <label class="rating-option" aria-label="1 star"><input type="radio" name="rating" value="1" required><span class="star" aria-hidden="true">★</span></label>
+                  <label class="rating-option" aria-label="2 stars"><input type="radio" name="rating" value="2"><span class="star" aria-hidden="true">★</span></label>
+                  <label class="rating-option" aria-label="3 stars"><input type="radio" name="rating" value="3"><span class="star" aria-hidden="true">★</span></label>
+                  <label class="rating-option" aria-label="4 stars"><input type="radio" name="rating" value="4"><span class="star" aria-hidden="true">★</span></label>
+                  <label class="rating-option" aria-label="5 stars"><input type="radio" name="rating" value="5"><span class="star" aria-hidden="true">★</span></label>
+                </div>
+                <p class="rating-hint">Tap a star to rate / <span class="kh" lang="km">ចុចផ្កាយដើម្បីវាយតម្លៃ</span></p>
+              </fieldset>
+            </div>
+          </section>
+
+          <section class="form-step" data-step="3" aria-labelledby="stepTitle3" hidden>
+            <div class="form-section-label" id="stepTitle3"><span class="step">04</span><span>Choose an area / <span class="kh" lang="km">ជ្រើសរើសផ្នែក</span></span></div>
+            <p class="step-description">Select an area to rate and comment on. Change the selection to add feedback for another area. / <span class="kh" lang="km">ជ្រើសរើសផ្នែកដើម្បីវាយតម្លៃ និងផ្តល់មតិយោបល់។ អ្នកអាចប្តូរផ្នែកដើម្បីបន្ថែមមតិយោបល់ផ្សេងទៀត។</span></p>
+            <div class="field">
+              <label for="feedbackTopics">Feedback Area <span class="kh" lang="km">ផ្នែកដែលចង់ផ្តល់មតិយោបល់</span></label>
+              <div class="select-wrap">
+                <select id="feedbackTopics" name="feedbackTopics">
+                  <option value="" selected>Choose an area / ជ្រើសរើសផ្នែក</option>
+                  <option value="Reception & welcome" data-topic="welcome" data-kh="ការទទួលស្វាគមន៍ភ្ញៀវ">Reception & welcome / ការទទួលស្វាគមន៍ភ្ញៀវ</option>
+                  <option value="Staff friendliness" data-topic="staff" data-kh="ភាពរួសរាយរបស់បុគ្គលិក">Staff friendliness / ភាពរួសរាយរបស់បុគ្គលិក</option>
+                  <option value="Consultation & explanation" data-topic="consultation" data-kh="ការពិគ្រោះ និងការពន្យល់">Consultation & explanation / ការពិគ្រោះ និងការពន្យល់</option>
+                  <option value="Waiting time" data-topic="waiting" data-kh="ពេលវេលារង់ចាំ">Waiting time / ពេលវេលារង់ចាំ</option>
+                  <option value="Clinic cleanliness" data-topic="cleanliness" data-kh="អនាម័យ និងភាពស្អាត">Clinic cleanliness / អនាម័យ និងភាពស្អាត</option>
+                  <option value="Comfort & privacy" data-topic="comfort" data-kh="ផាសុកភាព និងឯកជនភាព">Comfort & privacy / ផាសុកភាព និងឯកជនភាព</option>
+                  <option value="Treatment quality" data-topic="treatment" data-kh="គុណភាពនៃការព្យាបាល">Treatment quality / គុណភាពនៃការព្យាបាល</option>
+                  <option value="Results" data-topic="results" data-kh="លទ្ធផល">Results / លទ្ធផល</option>
+                  <option value="Price & value" data-topic="price" data-kh="តម្លៃ និងភាពសមរម្យ">Price & value / តម្លៃ និងភាពសមរម្យ</option>
+                  <option value="Aftercare & follow-up" data-topic="aftercare" data-kh="ការថែទាំ និងតាមដានបន្ទាប់">Aftercare & follow-up / ការថែទាំ និងតាមដានបន្ទាប់</option>
+                  <option value="Other" data-topic="other" data-kh="ផ្សេងៗ">Other / ផ្សេងៗ</option>
+                </select>
+              </div>
+              <p class="completion-hint" id="completionHint" aria-live="polite">Completed areas will show a blue check / <span class="kh" lang="km">ផ្នែកដែលបានបំពេញនឹងមានសញ្ញាធីកពណ៌ខៀវ</span></p>
+            </div>
+            <div class="topic-feedback-cards" id="topicFeedbackCards" aria-live="polite"></div>
+          </section>
+
+          <section class="form-step" data-step="4" aria-labelledby="stepTitle4" hidden>
+            <div class="form-section-label" id="stepTitle4"><span class="step">05</span><span>Anything else? / <span class="kh" lang="km">តើមានមតិយោបល់ផ្សេងទៀតទេ?</span></span></div>
+            <div class="field">
+              <label for="feedback">Additional Feedback <span class="kh" lang="km">មតិយោបល់បន្ថែម</span></label>
+              <textarea id="feedback" name="feedback" placeholder="Share anything else you would like us to know / សូមចែករំលែកមតិយោបល់ផ្សេងទៀត" rows="5"></textarea>
+            </div>
+            <div class="feedback-private">
+              <p class="privacy-note">Your feedback will be kept confidential.<span class="kh" lang="km">មតិយោបល់របស់អ្នកនឹងត្រូវបានរក្សាជាការសម្ងាត់។</span></p>
+            </div>
+          </section>
+
+          <div class="step-actions">
+            <button class="step-button step-back" id="backButton" type="button" hidden>Back / ត្រឡប់ក្រោយ</button>
+            <button class="step-button step-next" id="nextButton" type="button">Continue / បន្ត</button>
+            <button class="submit-button" id="submitButton" type="submit" hidden>Submit Feedback / បញ្ជូនមតិយោបល់</button>
           </div>
-          <div class="field">
-            <label for="feedback">Additional Feedback <span class="kh" lang="km">មតិយោបល់បន្ថែម</span></label>
-            <textarea id="feedback" name="feedback" placeholder="Anything else you would like us to know? / តើអ្នកមានមតិយោបល់ផ្សេងទៀតទេ?" rows="3"></textarea>
-          </div>
-          <button class="submit-button" id="submitButton" type="submit">Submit Feedback <span class="kh" lang="km" style="display:inline;margin:0 0 0 5px;color:#fff">បញ្ជូនមតិយោបល់</span></button>
-          <p class="privacy-note">Your feedback will be kept confidential.<span class="kh" lang="km">មតិយោបល់របស់អ្នកនឹងត្រូវបានរក្សាជាការសម្ងាត់។</span></p>
         </form>
       </div>
       <div class="success" id="successMessage" role="status" aria-live="polite">
@@ -280,6 +333,16 @@
     const topicFeedbackCards = document.getElementById('topicFeedbackCards');
     const topicResponses = new Map();
     const visitDateInput = document.getElementById('visitDate');
+    const formSteps = [...document.querySelectorAll('.form-step')];
+    const progressLabel = document.getElementById('progressLabel');
+    const progressPercent = document.getElementById('progressPercent');
+    const progressTrack = document.getElementById('progressTrack');
+    const progressFill = document.getElementById('progressFill');
+    const backButton = document.getElementById('backButton');
+    const nextButton = document.getElementById('nextButton');
+    const topicSelect = document.getElementById('feedbackTopics');
+    const completionHint = document.getElementById('completionHint');
+    let currentStep = 0;
     if (visitDateInput && !visitDateInput.value) {
       const now = new Date();
       const localToday = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
@@ -294,16 +357,62 @@
       });
     }
 
+    function updateTopicCompletion() {
+      const options = [...topicSelect.querySelectorAll('option[data-topic]')];
+      const completed = options.filter((option) => {
+        const response = topicResponses.get(option.dataset.topic);
+        const done = Boolean(response?.rating && response.feedback.trim());
+        option.textContent = `${done ? '✓ ' : ''}${option.dataset.label}`;
+        return done;
+      }).length;
+      completionHint.innerHTML = `Completed areas: ${completed} / 11 <span class="kh" lang="km">ផ្នែកដែលបានបំពេញ៖ ${completed} / ១១</span>`;
+    }
+
     function saveTopicResponse(card) {
       const topic = card.dataset.topic;
       if (!topic) return;
       const rating = card.querySelector('.topic-rating-box input:checked')?.value || '';
       const feedback = card.querySelector('textarea')?.value || '';
       topicResponses.set(topic, { rating, feedback });
-      const choice = [...document.querySelectorAll('#feedbackTopics input')]
-        .find((input) => input.dataset.topic === topic)?.closest('.topic-choice');
-      choice?.classList.toggle('is-complete', Boolean(rating && feedback.trim()));
+      updateTopicCompletion();
     }
+
+    function showStep(nextStep) {
+      currentStep = Math.max(0, Math.min(nextStep, formSteps.length - 1));
+      formSteps.forEach((step, index) => {
+        const active = index === currentStep;
+        step.hidden = !active;
+        step.classList.toggle('is-active', active);
+      });
+      const number = currentStep + 1;
+      const percent = Math.round((number / formSteps.length) * 100);
+      progressLabel.textContent = `Step ${number} of ${formSteps.length} / ជំហានទី ${number} នៃ ${formSteps.length}`;
+      progressPercent.textContent = `${percent}%`;
+      progressFill.style.width = `${percent}%`;
+      progressTrack.setAttribute('aria-valuenow', String(number));
+      backButton.hidden = currentStep === 0;
+      nextButton.hidden = currentStep === formSteps.length - 1;
+      submitButton.hidden = currentStep !== formSteps.length - 1;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function validateStep(index) {
+      const requiredFields = [...formSteps[index].querySelectorAll('input, select, textarea')]
+        .filter((field) => field.required && !field.disabled);
+      for (const field of requiredFields) {
+        if (!field.checkValidity()) {
+          field.reportValidity();
+          return false;
+        }
+      }
+      return true;
+    }
+
+    nextButton.addEventListener('click', () => {
+      if (validateStep(currentStep)) showStep(currentStep + 1);
+    });
+    backButton.addEventListener('click', () => showStep(currentStep - 1));
+    showStep(0);
 
     function makeRating(name, label, required = false) {
       const fieldset = document.createElement('fieldset');
@@ -443,55 +552,66 @@
     function updateTopicFeedback() {
       const previousCard = topicFeedbackCards.querySelector('.topic-feedback-card');
       if (previousCard) saveTopicResponse(previousCard);
-      const selected = [...document.querySelectorAll('#feedbackTopics input:checked')];
       topicFeedbackCards.replaceChildren();
-      for (const checkbox of selected) {
-        const topic = checkbox.dataset.topic;
-        const sourceLabel = checkbox.closest('label').querySelector('.topic-chip').cloneNode(true);
-        const card = document.createElement('section');
-        card.className = 'topic-feedback-card';
-        card.dataset.topic = topic;
-        card.append(sourceLabel);
-        card.append(makeRating(`topicRating_${topic}`, 'Rate this area / វាយតម្លៃផ្នែកនេះ', true));
-        const detailLabel = document.createElement('label');
-        const detailId = `topicDetail_${topic}`;
-        detailLabel.htmlFor = detailId;
-        detailLabel.textContent = 'Additional Feedback / មតិយោបល់បន្ថែម';
-        const detail = document.createElement('textarea');
-        detail.id = detailId;
-        detail.name = `topicFeedback_${topic}`;
-        detail.rows = 2;
-        detail.placeholder = 'Tell us more about this part of your visit / សូមប្រាប់យើងបន្ថែមអំពីចំណុចនេះ';
-        const promptPanel = document.createElement('div');
-        promptPanel.className = 'smart-prompt-panel';
-        promptPanel.hidden = true;
-        const promptTitle = document.createElement('p');
-        promptTitle.className = 'smart-prompt-title';
-        const topicKhmer = sourceLabel.querySelector('.kh')?.textContent.trim() || '';
-        promptTitle.textContent = `Suggestions for ${checkbox.value} / ឃ្លាជំនួយសម្រាប់ ${topicKhmer}`;
-        const promptList = document.createElement('div');
-        promptList.className = 'smart-prompt-list';
-        promptPanel.append(promptTitle, promptList);
-        card.append(promptPanel, detailLabel, detail);
-        detail.addEventListener('input', () => saveTopicResponse(card));
-        const saved = topicResponses.get(topic);
-        if (saved) {
-          detail.value = saved.feedback;
-          if (saved.rating) {
-            const savedRating = card.querySelector(`.topic-rating-box input[value="${saved.rating}"]`);
-            if (savedRating) savedRating.checked = true;
-          }
+      const selectedOption = topicSelect.selectedOptions[0];
+      const topic = selectedOption?.dataset.topic;
+      if (!topic) return;
+
+      const card = document.createElement('section');
+      card.className = 'topic-feedback-card';
+      card.dataset.topic = topic;
+      const title = document.createElement('div');
+      title.className = 'topic-feedback-title';
+      title.textContent = selectedOption.value;
+      const khmer = document.createElement('span');
+      khmer.className = 'kh';
+      khmer.lang = 'km';
+      khmer.textContent = selectedOption.dataset.kh || '';
+      title.append(khmer);
+      card.append(title);
+      card.append(makeRating(`topicRating_${topic}`, 'Rate this area / វាយតម្លៃផ្នែកនេះ', true));
+
+      const detailLabel = document.createElement('label');
+      const detailId = `topicDetail_${topic}`;
+      detailLabel.htmlFor = detailId;
+      detailLabel.innerHTML = 'Additional Feedback <span class="kh" lang="km">មតិយោបល់បន្ថែម</span>';
+      const detail = document.createElement('textarea');
+      detail.id = detailId;
+      detail.name = `topicFeedback_${topic}`;
+      detail.rows = 2;
+      detail.placeholder = 'Tell us more about this area / សូមប្រាប់យើងបន្ថែមអំពីផ្នែកនេះ';
+
+      const promptPanel = document.createElement('div');
+      promptPanel.className = 'smart-prompt-panel';
+      promptPanel.hidden = true;
+      const promptTitle = document.createElement('p');
+      promptTitle.className = 'smart-prompt-title';
+      promptTitle.textContent = `Quick comment ideas / ឃ្លាជំនួយសម្រាប់ ${selectedOption.dataset.kh || ''}`;
+      const promptList = document.createElement('div');
+      promptList.className = 'smart-prompt-list';
+      promptPanel.append(promptTitle, promptList);
+      card.append(promptPanel, detailLabel, detail);
+      detail.addEventListener('input', () => saveTopicResponse(card));
+
+      const saved = topicResponses.get(topic);
+      if (saved) {
+        detail.value = saved.feedback;
+        if (saved.rating) {
+          const savedRating = card.querySelector(`.topic-rating-box input[value="${saved.rating}"]`);
+          if (savedRating) savedRating.checked = true;
         }
-        topicFeedbackCards.append(card);
-        refreshRating(card.querySelector('.topic-rating-box'));
-        updateSmartFeedback(card);
-        saveTopicResponse(card);
       }
+      topicFeedbackCards.append(card);
+      refreshRating(card.querySelector('.topic-rating-box'));
+      updateSmartFeedback(card);
+      saveTopicResponse(card);
     }
 
-    document.querySelectorAll('#feedbackTopics input').forEach((input) => {
-      input.addEventListener('change', updateTopicFeedback);
+    topicSelect.querySelectorAll('option[data-topic]').forEach((option) => {
+      option.dataset.label = option.textContent;
     });
+    topicSelect.addEventListener('change', updateTopicFeedback);
+    updateTopicCompletion();
 
     document.querySelectorAll('.rating-box input[type="radio"]').forEach((radio) => {
       radio.addEventListener('change', () => refreshRating(radio.closest('.rating-box')));
@@ -521,7 +641,7 @@
 
     feedbackForm.addEventListener('submit', async (event) => {
       event.preventDefault();
-      if (!feedbackForm.reportValidity()) return;
+      if (!validateStep(currentStep)) return;
       if (!scriptURL || scriptURL === 'YOUR_WEB_APP_URL_HERE') {
         alert('Feedback submission is not configured yet. Please contact the clinic. / ការបញ្ជូនមតិយោបល់មិនទាន់ត្រូវបានកំណត់ទេ។ សូមទាក់ទងគ្លីនិក។');
         return;
