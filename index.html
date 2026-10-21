@@ -47,8 +47,7 @@
     .card-inner { padding: clamp(28px, 5vw, 48px) clamp(22px, 6vw, 58px) 42px; }
     .details-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 20px; }
     .field-wide { grid-column: 1 / -1; }
-    .form-section-label { display: flex; align-items: center; gap: 10px; grid-column: 1 / -1; margin: 0 0 2px; padding: 18px 20px; border: 1px solid var(--line); border-left: 4px solid var(--gold); border-radius: 9px; background: #fff; color: var(--ink); font-size: 12px; font-weight: 700; letter-spacing: .025em; }
-    .form-section-label .step { display: grid; width: 25px; height: 25px; place-items: center; flex: 0 0 25px; border: 1px solid rgba(197,160,89,.45); border-radius: 50%; color: var(--gold-deep); font-size: 10px; }
+    .form-section-label { display: block; grid-column: 1 / -1; margin: 4px 0 13px; padding: 0 0 8px; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; background: transparent; color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
     .form-section-label .kh { display: inline; margin: 0 0 0 4px; font-size: 11px; font-weight: 400; color: var(--muted); }
     .field { min-width: 0; }
     .rating-panel { padding: 18px 16px 14px; border: 1px solid #eee8dc; border-radius: 9px; background: #fbfaf7; }
@@ -134,28 +133,12 @@
     .submit-button:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
     .submit-button:disabled { cursor: wait; opacity: .76; }
     .privacy-note { margin: 14px 0 0; text-align: center; color: #77736c; font-size: 10px; line-height: 1.75; }
-    .form-progress { margin: 0 0 26px; }
-    .progress-copy { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 9px; color: var(--muted); font-size: 10px; font-weight: 600; }
-    .progress-track { height: 5px; overflow: hidden; border-radius: 99px; background: #eee9df; }
-    .progress-track span { display: block; width: 20%; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #b8904e, #d9bd80); transition: width .28s ease; }
-    .form-step { min-height: 345px; animation: step-enter .22s ease both; }
-    .form-step[data-step="0"], .form-step[data-step="1"] { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 20px; align-content: start; }
-    .form-step[data-step="0"] .form-section-label, .form-step[data-step="1"] .form-section-label,
-    .form-step[data-step="0"] .field:last-child, .form-step[data-step="1"] .field:last-child { grid-column: 1 / -1; }
-    .form-step[hidden] { display: none !important; }
-    @keyframes step-enter { from { opacity: .4; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    .form-step { min-height: 0; margin: 0 0 19px; animation: none; }
+    .form-step[data-step="0"], .form-step[data-step="1"] { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 16px; align-content: start; }
+    .form-step[data-step="0"] .form-section-label, .form-step[data-step="1"] .form-section-label { grid-column: 1 / -1; }
     .step-description { margin: -4px 0 20px; color: var(--muted); font-size: 12px; line-height: 1.8; }
-    .completion-hint { margin: 9px 0 0; color: var(--muted); font-size: 10px; line-height: 1.7; }
-    .completion-hint .kh { display: inline; }
-    .step-actions { display: flex; align-items: center; gap: 12px; margin-top: 22px; }
-    .step-button { min-height: 50px; padding: 12px 18px; border: 1px solid var(--line); border-radius: 7px; background: #fff; color: var(--ink); font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; touch-action: manipulation; }
-    .step-button:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
-    .step-button:disabled { opacity: .6; cursor: wait; }
-    .step-next, .submit-button { margin-left: auto; }
-    .step-next { min-width: 190px; border-color: var(--gold); background: var(--gold); color: #fff; }
-    .step-next:hover:not(:disabled) { background: var(--gold-deep); }
-    .step-back { min-width: 130px; }
-    .step-actions .submit-button { width: auto; min-width: 220px; margin-top: 0; }
+    .step-actions { display: flex; align-items: center; margin-top: 20px; }
+    .step-actions .submit-button { width: 100%; min-width: 0; margin: 0; }
     .feedback-private { padding: 12px 14px; border: 1px solid #eee8dc; border-radius: 7px; background: #fbfaf7; }
     .feedback-private .privacy-note { margin: 0; }
     .topic-feedback-card .topic-chip .kh { display: block; }
@@ -177,8 +160,6 @@
       .form-section-label { padding: 15px 14px; }
       .form-heading { font-size: 28px; }
       .form-subtitle { margin-bottom: 20px; font-size: 12px; }
-      .form-progress { margin-bottom: 20px; }
-      .form-step { min-height: 330px; }
       .form-step[data-step="0"], .form-step[data-step="1"] { display: block; }
       .field { margin-bottom: 15px; }
       .form-step > .field { padding: 15px 14px; margin-bottom: 12px; }
@@ -189,18 +170,11 @@
       .topic-feedback-card { padding: 13px; }
       .topic-feedback-card textarea { min-height: 104px; }
       .step-description { margin-bottom: 16px; font-size: 11px; }
-      .step-actions { gap: 8px; }
-      .step-button { min-height: 50px; padding: 10px 12px; font-size: 11px; }
-      .step-back { min-width: 105px; }
-      .step-next { min-width: 0; flex: 1; }
-      .step-actions .submit-button { min-width: 0; flex: 1; padding-inline: 10px; font-size: 10px; letter-spacing: .06em; }
+      .step-actions .submit-button { padding-inline: 10px; font-size: 11px; letter-spacing: .08em; }
     }
     @media (max-width: 380px) {
       .card-inner { padding: 20px 15px 20px; }
       .form-heading { font-size: 26px; }
-      .form-step { min-height: 315px; }
-      .step-button { font-size: 10px; }
-      .step-back { min-width: 96px; }
     }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }
   </style>
@@ -218,14 +192,10 @@
         <h1 class="form-heading" id="formTitle">Customer Feedback<span class="kh" lang="km">មតិយោបល់អតិថិជន</span></h1>
         <p class="form-subtitle">Your experience matters to us. Please take a moment to share your feedback.<span class="kh" lang="km">បទពិសោធន៍របស់អ្នកមានសារៈសំខាន់ចំពោះយើង។ សូមចំណាយពេលបន្តិចដើម្បីចែករំលែកមតិយោបល់។</span></p>
 
-        <form id="feedbackForm" novalidate>
-          <div class="form-progress" aria-label="Form progress">
-            <div class="progress-copy"><span id="progressLabel">Step 1 of 5 / ជំហានទី ១ នៃ ៥</span><span id="progressPercent">20%</span></div>
-            <div class="progress-track" id="progressTrack" role="progressbar" aria-label="Form progress / វឌ្ឍនភាពបែបបទ" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1"><span id="progressFill"></span></div>
-          </div>
+        <form id="feedbackForm">
 
-          <section class="form-step is-active" data-step="0" aria-labelledby="stepTitle0">
-            <div class="form-section-label" id="stepTitle0"><span class="step">01</span><span>About you / <span class="kh" lang="km">ព័ត៌មានរបស់អ្នក</span></span></div>
+          <section class="form-step" data-step="0" aria-labelledby="stepTitle0">
+            <div class="form-section-label" id="stepTitle0"><span>About you / <span class="kh" lang="km">ព័ត៌មានរបស់អ្នក</span></span></div>
             <div class="field">
               <label for="fullName">Full Name <span class="kh" lang="km">ឈ្មោះពេញ</span></label>
               <input id="fullName" name="fullName" type="text" autocomplete="name" placeholder="Enter your full name / បញ្ចូលឈ្មោះពេញ" required>
@@ -238,8 +208,8 @@
             <input type="hidden" name="position" value="">
           </section>
 
-          <section class="form-step" data-step="1" aria-labelledby="stepTitle1" hidden>
-            <div class="form-section-label" id="stepTitle1"><span class="step">02</span><span>Your visit / <span class="kh" lang="km">ព័ត៌មាននៃការមកទទួលសេវា</span></span></div>
+          <section class="form-step" data-step="1" aria-labelledby="stepTitle1">
+            <div class="form-section-label" id="stepTitle1"><span>Your visit / <span class="kh" lang="km">ព័ត៌មាននៃការមកទទួលសេវា</span></span></div>
             <div class="field">
               <label for="visitDate">Visit Date <span class="kh" lang="km">កាលបរិច្ឆេទទទួលសេវា</span></label>
               <input id="visitDate" name="visitDate" type="date" autocomplete="off">
@@ -258,8 +228,8 @@
             </div>
           </section>
 
-          <section class="form-step" data-step="2" aria-labelledby="stepTitle2" hidden>
-            <div class="form-section-label" id="stepTitle2"><span class="step">03</span><span>Rate your experience / <span class="kh" lang="km">វាយតម្លៃបទពិសោធន៍</span></span></div>
+          <section class="form-step" data-step="2" aria-labelledby="stepTitle2">
+            <div class="form-section-label" id="stepTitle2"><span>Rate your experience / <span class="kh" lang="km">វាយតម្លៃបទពិសោធន៍</span></span></div>
             <p class="step-description">How was your visit overall? / <span class="kh" lang="km">តើបទពិសោធន៍ទូទៅរបស់អ្នកយ៉ាងដូចម្តេច?</span></p>
             <div class="field rating-panel">
               <fieldset>
@@ -276,8 +246,8 @@
             </div>
           </section>
 
-          <section class="form-step" data-step="3" aria-labelledby="stepTitle3" hidden>
-            <div class="form-section-label" id="stepTitle3"><span class="step">04</span><span>Anything else? / <span class="kh" lang="km">តើមានមតិយោបល់ផ្សេងទៀតទេ?</span></span></div>
+          <section class="form-step" data-step="3" aria-labelledby="stepTitle3">
+            <div class="form-section-label" id="stepTitle3"><span>Anything else? / <span class="kh" lang="km">តើមានមតិយោបល់ផ្សេងទៀតទេ?</span></span></div>
             <div class="field">
               <label for="feedback">Additional Feedback <span class="kh" lang="km">មតិយោបល់បន្ថែម</span></label>
               <p class="feedback-helper">Add details about what went well or what we could improve. / <span class="kh" lang="km">សូមរៀបរាប់អំពីចំណុចដែលល្អ ឬចំណុចដែលយើងអាចកែលម្អ។</span></p>
@@ -308,11 +278,8 @@
               <p class="privacy-note">Your feedback will be kept confidential.<span class="kh" lang="km">មតិយោបល់របស់អ្នកនឹងត្រូវបានរក្សាជាការសម្ងាត់។</span></p>
             </div>
           </section>
-
           <div class="step-actions">
-            <button class="step-button step-back" id="backButton" type="button" hidden>Back / ត្រឡប់ក្រោយ</button>
-            <button class="step-button step-next" id="nextButton" type="button">Continue / បន្ត</button>
-            <button class="submit-button" id="submitButton" type="submit" hidden>Submit Feedback / បញ្ជូនមតិយោបល់</button>
+            <button class="submit-button" id="submitButton" type="submit">Submit Feedback / បញ្ជូនមតិយោបល់</button>
           </div>
         </form>
       </div>
@@ -333,17 +300,9 @@
     const brandHeader = document.getElementById('brandHeader');
     const successMessage = document.getElementById('successMessage');
     const visitDateInput = document.getElementById('visitDate');
-    const formSteps = [...document.querySelectorAll('.form-step')];
-    const progressLabel = document.getElementById('progressLabel');
-    const progressPercent = document.getElementById('progressPercent');
-    const progressTrack = document.getElementById('progressTrack');
-    const progressFill = document.getElementById('progressFill');
-    const backButton = document.getElementById('backButton');
-    const nextButton = document.getElementById('nextButton');
     const feedbackFocusSelect = document.getElementById('feedbackFocus');
     const additionalFeedbackSuggestion = document.getElementById('additionalFeedbackSuggestion');
     const additionalFeedback = document.getElementById('feedback');
-    let currentStep = 0;
     if (visitDateInput && !visitDateInput.value) {
       const now = new Date();
       const localToday = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
@@ -357,43 +316,6 @@
         option.querySelector('.star').classList.toggle('selected', value <= selected);
       });
     }
-
-    function showStep(nextStep) {
-      currentStep = Math.max(0, Math.min(nextStep, formSteps.length - 1));
-      formSteps.forEach((step, index) => {
-        const active = index === currentStep;
-        step.hidden = !active;
-        step.classList.toggle('is-active', active);
-      });
-      const number = currentStep + 1;
-      const percent = Math.round((number / formSteps.length) * 100);
-      progressLabel.textContent = `Step ${number} of ${formSteps.length} / ជំហានទី ${number} នៃ ${formSteps.length}`;
-      progressPercent.textContent = `${percent}%`;
-      progressFill.style.width = `${percent}%`;
-      progressTrack.setAttribute('aria-valuenow', String(number));
-      backButton.hidden = currentStep === 0;
-      nextButton.hidden = currentStep === formSteps.length - 1;
-      submitButton.hidden = currentStep !== formSteps.length - 1;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function validateStep(index) {
-      const requiredFields = [...formSteps[index].querySelectorAll('input, select, textarea')]
-        .filter((field) => field.required && !field.disabled);
-      for (const field of requiredFields) {
-        if (!field.checkValidity()) {
-          field.reportValidity();
-          return false;
-        }
-      }
-      return true;
-    }
-
-    nextButton.addEventListener('click', () => {
-      if (validateStep(currentStep)) showStep(currentStep + 1);
-    });
-    backButton.addEventListener('click', () => showStep(currentStep - 1));
-    showStep(0);
 
     const smartFeedbackOptions = {
       welcome: {
@@ -520,7 +442,7 @@
 
     feedbackForm.addEventListener('submit', async (event) => {
       event.preventDefault();
-      if (!validateStep(currentStep)) return;
+      if (!feedbackForm.reportValidity()) return;
       if (!scriptURL || scriptURL === 'YOUR_WEB_APP_URL_HERE') {
         alert('Feedback submission is not configured yet. Please contact the clinic. / ការបញ្ជូនមតិយោបល់មិនទាន់ត្រូវបានកំណត់ទេ។ សូមទាក់ទងគ្លីនិក។');
         return;
