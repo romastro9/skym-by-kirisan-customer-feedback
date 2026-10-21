@@ -116,6 +116,13 @@
     .smart-prompt-list { display: block; }
     select.smart-prompt-select { margin: 0; border-color: #d7e4fb; color: #315b98; background-color: #f5f9ff; font-size: 11px; }
     select.smart-prompt-select:focus { border-color: #2563eb; }
+    .feedback-helper { margin: -3px 0 12px; color: var(--muted); font-size: 11px; line-height: 1.7; }
+    .feedback-helper .kh { display: inline; }
+    .additional-suggestions { display: grid; gap: 8px; margin-top: 15px; }
+    .additional-suggestions label { margin: 0; color: var(--muted); font-size: 11px; }
+    .additional-suggestions select { min-height: 46px; font-size: 12px; }
+    .additional-suggestions select.smart-prompt-select { margin-top: 0; }
+    .additional-suggestions select:disabled { color: #888; background-color: #f7f6f3; cursor: not-allowed; }
     .feedback-private { padding: 12px 14px; border: 1px solid #eee8dc; border-radius: 7px; background: #fbfaf7; }
     .submit-button {
       width: 100%; min-height: 51px; margin-top: 5px; padding: 13px 20px;
@@ -227,10 +234,8 @@
               <label for="phone">Phone Number <span class="kh" lang="km">លេខទូរស័ព្ទ</span></label>
               <input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="Enter your phone number / បញ្ចូលលេខទូរស័ព្ទ" required>
             </div>
-            <div class="field">
-              <label for="position">Position <span class="kh" lang="km">មុខតំណែង (ជាជម្រើស)</span></label>
-              <input id="position" name="position" type="text" autocomplete="organization-title" placeholder="Your position / មុខតំណែងរបស់អ្នក (optional / ជាជម្រើស)">
-            </div>
+            <!-- Keeps the existing Apps Script column order stable. Position is no longer collected. -->
+            <input type="hidden" name="position" value="">
           </section>
 
           <section class="form-step" data-step="1" aria-labelledby="stepTitle1" hidden>
@@ -305,7 +310,30 @@
             <div class="form-section-label" id="stepTitle4"><span class="step">05</span><span>Anything else? / <span class="kh" lang="km">តើមានមតិយោបល់ផ្សេងទៀតទេ?</span></span></div>
             <div class="field">
               <label for="feedback">Additional Feedback <span class="kh" lang="km">មតិយោបល់បន្ថែម</span></label>
+              <p class="feedback-helper">Add details about what went well or what we could improve. / <span class="kh" lang="km">សូមរៀបរាប់អំពីចំណុចដែលល្អ ឬចំណុចដែលយើងអាចកែលម្អ។</span></p>
               <textarea id="feedback" name="feedback" placeholder="Share anything else you would like us to know / សូមចែករំលែកមតិយោបល់ផ្សេងទៀត" rows="5"></textarea>
+              <div class="additional-suggestions">
+                <label for="feedbackFocus">Get a suggestion for / ជ្រើសរើសផ្នែកដើម្បីទទួលបានឃ្លាជំនួយ</label>
+                <div class="select-wrap">
+                  <select id="feedbackFocus">
+                    <option value="" selected>Choose a feedback area / ជ្រើសរើសផ្នែកមតិយោបល់</option>
+                    <option value="welcome">Reception & welcome / ការទទួលស្វាគមន៍ភ្ញៀវ</option>
+                    <option value="staff">Staff / បុគ្គលិក</option>
+                    <option value="consultation">Consultation & explanation / ការពិគ្រោះ និងការពន្យល់</option>
+                    <option value="waiting">Waiting time / ពេលវេលារង់ចាំ</option>
+                    <option value="cleanliness">Cleanliness / អនាម័យ និងភាពស្អាត</option>
+                    <option value="comfort">Comfort & privacy / ផាសុកភាព និងឯកជនភាព</option>
+                    <option value="treatment">Treatment / ការព្យាបាល</option>
+                    <option value="results">Results / លទ្ធផល</option>
+                    <option value="price">Price & value / តម្លៃ និងភាពសមរម្យ</option>
+                    <option value="aftercare">Aftercare & follow-up / ការថែទាំ និងតាមដានបន្ទាប់</option>
+                    <option value="other">Other / ផ្សេងៗ</option>
+                  </select>
+                </div>
+                <select id="additionalFeedbackSuggestion" class="smart-prompt-select" aria-label="Suggested feedback / ឃ្លាជំនួយសម្រាប់មតិយោបល់" disabled>
+                  <option value="">Rate your visit and choose an area to see suggestions / សូមដាក់ពិន្ទុ និងជ្រើសរើសផ្នែកដើម្បីមើលឃ្លាជំនួយ</option>
+                </select>
+              </div>
             </div>
             <div class="feedback-private">
               <p class="privacy-note">Your feedback will be kept confidential.<span class="kh" lang="km">មតិយោបល់របស់អ្នកនឹងត្រូវបានរក្សាជាការសម្ងាត់។</span></p>
@@ -347,6 +375,9 @@
     const nextButton = document.getElementById('nextButton');
     const topicSelect = document.getElementById('feedbackTopics');
     const completionHint = document.getElementById('completionHint');
+    const feedbackFocusSelect = document.getElementById('feedbackFocus');
+    const additionalFeedbackSuggestion = document.getElementById('additionalFeedbackSuggestion');
+    const additionalFeedback = document.getElementById('feedback');
     let currentStep = 0;
     if (visitDateInput && !visitDateInput.value) {
       const now = new Date();
@@ -516,6 +547,47 @@
       }
     };
 
+    function updateAdditionalFeedbackSuggestions() {
+      const rating = Number(document.querySelector('.rating-box input:checked')?.value || 0);
+      const topic = feedbackFocusSelect.value;
+      const promptSet = smartFeedbackOptions[topic];
+      additionalFeedbackSuggestion.replaceChildren();
+      additionalFeedbackSuggestion.disabled = !rating || !promptSet;
+
+      const placeholder = document.createElement('option');
+      placeholder.value = '';
+      placeholder.selected = true;
+      placeholder.textContent = !rating
+        ? 'Rate your visit first / សូមដាក់ពិន្ទុបទពិសោធន៍ជាមុន'
+        : !topic
+          ? 'Choose an area to see suggestions / ជ្រើសរើសផ្នែកដើម្បីមើលឃ្លាជំនួយ'
+          : 'Choose a suggestion / ជ្រើសរើសឃ្លាជំនួយ';
+      additionalFeedbackSuggestion.append(placeholder);
+      if (!rating || !promptSet) return;
+
+      const prompts = rating <= 2 ? promptSet.low : rating === 3 ? promptSet.middle : promptSet.high;
+      for (const prompt of prompts) {
+        const option = document.createElement('option');
+        option.value = prompt;
+        option.textContent = prompt;
+        additionalFeedbackSuggestion.append(option);
+      }
+    }
+
+    additionalFeedbackSuggestion.addEventListener('change', () => {
+      const prompt = additionalFeedbackSuggestion.value;
+      if (!prompt) return;
+      const current = additionalFeedback.value.trim();
+      if (!current.includes(prompt)) {
+        additionalFeedback.value = current ? `${current}\n${prompt}` : prompt;
+        additionalFeedback.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+      additionalFeedbackSuggestion.selectedIndex = 0;
+      additionalFeedback.focus();
+    });
+    feedbackFocusSelect.addEventListener('change', updateAdditionalFeedbackSuggestions);
+    updateAdditionalFeedbackSuggestions();
+
     function updateSmartFeedback(card) {
       const rating = Number(card.querySelector('.topic-rating-box input:checked')?.value || 0);
       const panel = card.querySelector('.smart-prompt-panel');
@@ -637,7 +709,10 @@
     updateTopicCompletion();
 
     document.querySelectorAll('.rating-box input[type="radio"]').forEach((radio) => {
-      radio.addEventListener('change', () => refreshRating(radio.closest('.rating-box')));
+      radio.addEventListener('change', () => {
+        refreshRating(radio.closest('.rating-box'));
+        updateAdditionalFeedbackSuggestions();
+      });
     });
 
     document.querySelectorAll('.rating-box').forEach(refreshRating);
