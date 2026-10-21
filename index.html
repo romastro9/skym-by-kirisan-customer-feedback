@@ -53,7 +53,7 @@
     .field { margin: 0 0 20px; }
     label, legend { display: block; margin: 0 0 8px; font-size: 12px; font-weight: 600; letter-spacing: .015em; }
     label .kh, legend .kh { display: inline; margin-left: 5px; color: var(--muted); font-size: 12px; font-weight: 400; }
-    input[type="text"], input[type="tel"], select, textarea {
+    input[type="text"], input[type="tel"], input[type="date"], select, textarea {
       display: block; width: 100%; min-height: 47px; padding: 12px 14px;
       border: 1px solid var(--line); border-radius: 7px; outline: 0;
       color: var(--ink); background-color: #fff; font: inherit; font-size: 13px;
@@ -152,7 +152,11 @@
             <label for="phone">Phone Number <span class="kh" lang="km">លេខទូរស័ព្ទ</span></label>
             <input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="Enter your phone number" required>
           </div>
-<div class="field">
+          <div class="field">
+            <label for="visitDate">Visit Date <span class="kh" lang="km">កាលបរិច្ឆេទមកទទួលសេវា (ជាជម្រើស)</span></label>
+            <input id="visitDate" name="visitDate" type="date" autocomplete="off">
+          </div>
+          <div class="field">
             <label for="service">Service Received <span class="kh" lang="km">សេវាកម្មដែលបានទទួល</span></label>
             <div class="select-wrap">
               <select id="service" name="service" required>
