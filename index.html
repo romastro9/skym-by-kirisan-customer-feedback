@@ -244,12 +244,8 @@
               <label for="visitDate">Visit Date <span class="kh" lang="km">កាលបរិច្ឆេទទទួលសេវា</span></label>
               <input id="visitDate" name="visitDate" type="date" autocomplete="off">
             </div>
-            <div class="field">
-              <label for="branch">Branch Visited <span class="kh" lang="km">សាខាដែលបានទទួលសេវា</span></label>
-              <div class="select-wrap">
-                <select id="branch" name="branch" required><option value="Vivean Ekreach" selected>Vivean Ekreach</option></select>
-              </div>
-            </div>
+            <!-- Retains the Apps Script column position after Branch Visited was removed. -->
+            <input type="hidden" name="branch" value="">
             <div class="field">
               <label for="service">Service Received <span class="kh" lang="km">សេវាកម្មដែលបានទទួល</span></label>
               <div class="select-wrap">
