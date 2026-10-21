@@ -297,7 +297,6 @@
                   <option value="Treatment quality" data-topic="treatment" data-kh="គុណភាពនៃការព្យាបាល">Treatment quality / គុណភាពនៃការព្យាបាល</option>
                   <option value="Results" data-topic="results" data-kh="លទ្ធផល">Results / លទ្ធផល</option>
                   <option value="Price & value" data-topic="price" data-kh="តម្លៃ និងភាពសមរម្យ">Price & value / តម្លៃ និងភាពសមរម្យ</option>
-                  <option value="Aftercare & follow-up" data-topic="aftercare" data-kh="ការថែទាំ និងតាមដានបន្ទាប់">Aftercare & follow-up / ការថែទាំ និងតាមដានបន្ទាប់</option>
                   <option value="Other" data-topic="other" data-kh="ផ្សេងៗ">Other / ផ្សេងៗ</option>
                 </select>
               </div>
@@ -326,7 +325,6 @@
                     <option value="treatment">Treatment / ការព្យាបាល</option>
                     <option value="results">Results / លទ្ធផល</option>
                     <option value="price">Price & value / តម្លៃ និងភាពសមរម្យ</option>
-                    <option value="aftercare">Aftercare & follow-up / ការថែទាំ និងតាមដានបន្ទាប់</option>
                     <option value="other">Other / ផ្សេងៗ</option>
                   </select>
                 </div>
@@ -401,7 +399,7 @@
         option.textContent = `${done ? '✓ ' : ''}${option.dataset.label}`;
         return done;
       }).length;
-      completionHint.innerHTML = `Completed areas: ${completed} / 11 <span class="kh" lang="km">ផ្នែកដែលបានបំពេញ៖ ${completed} / ១១</span>`;
+      completionHint.innerHTML = `Completed areas: ${completed} / 10 <span class="kh" lang="km">ផ្នែកដែលបានបំពេញ៖ ${completed} / ១០</span>`;
     }
 
     function saveTopicResponse(card) {
@@ -535,11 +533,6 @@
         middle: ['Pricing was understandable, but could be clearer. / តម្លៃអាចយល់បាន ប៉ុន្តែអាចពន្យល់ឲ្យច្បាស់ជាងនេះ។', 'A written price breakdown would help. / បញ្ជីបំបែកតម្លៃជាលាយលក្ខណ៍អក្សរនឹងមានប្រយោជន៍។'],
         high: ['The price was explained clearly. / តម្លៃត្រូវបានពន្យល់យ៉ាងច្បាស់។', 'The service felt worth the price. / សេវាកម្មសមនឹងតម្លៃ។']
       },
-      aftercare: {
-        low: ['I need clearer aftercare instructions. / ខ្ញុំត្រូវការការណែនាំថែទាំបន្ទាប់ឲ្យច្បាស់ជាងនេះ។', 'Please follow up about my aftercare question. / សូមតាមដានសំណួររបស់ខ្ញុំអំពីការថែទាំបន្ទាប់។'],
-        middle: ['The instructions helped, but a reminder would be useful. / ការណែនាំមានប្រយោជន៍ ប៉ុន្តែការរំលឹកនឹងជួយបាន។', 'I would like more guidance about recovery. / ខ្ញុំចង់បានការណែនាំបន្ថែមអំពីការស្តារឡើងវិញ។'],
-        high: ['The aftercare instructions were clear. / ការណែនាំថែទាំបន្ទាប់ច្បាស់លាស់។', 'Follow-up support was helpful. / ការគាំទ្រតាមដានបន្ទាប់មានប្រយោជន៍។']
-      },
       other: {
         low: ['Please follow up with me about my concern. / សូមតាមដានខ្ញុំអំពីកង្វល់នេះ។', 'Please improve this part of my visit. / សូមកែលម្អផ្នែកនេះនៃការមកទទួលសេវារបស់ខ្ញុំ។'],
         middle: ['I have a question the team can help with. / ខ្ញុំមានសំណួរដែលក្រុមការងារអាចជួយបាន។', 'One small change would improve my visit. / ការកែលម្អតូចមួយអាចធ្វើឲ្យការមកទទួលសេវាកាន់តែល្អ។'],
@@ -636,7 +629,6 @@
       treatment: ['How was the treatment process, comfort, and staff communication?', 'តើដំណើរការព្យាបាល ផាសុកភាព និងការប្រាស្រ័យទាក់ទងយ៉ាងដូចម្តេច?'],
       results: ['Did the results match your expectations? What would you like reviewed?', 'តើលទ្ធផលស្របនឹងការរំពឹងទុកទេ? តើអ្នកចង់ឲ្យយើងពិនិត្យអ្វីបន្ថែម?'],
       price: ['Were the full costs clear? Did the service feel worth the price?', 'តើតម្លៃសរុបច្បាស់ទេ? តើសេវាកម្មសមនឹងតម្លៃដែរឬទេ?'],
-      aftercare: ['Were aftercare instructions and follow-up useful and timely?', 'តើការណែនាំថែទាំបន្ទាប់ និងការតាមដានមានប្រយោជន៍ និងទាន់ពេលទេ?'],
       other: ['Tell us what happened, what went well, and what we can do better.', 'សូមប្រាប់យើងពីអ្វីដែលបានកើតឡើង ចំណុចដែលល្អ និងអ្វីដែលយើងអាចកែលម្អ។']
     };
 
