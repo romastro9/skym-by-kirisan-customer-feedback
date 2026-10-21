@@ -212,7 +212,7 @@
             <div class="form-section-label" id="stepTitle1"><span>Your visit / <span class="kh" lang="km">ព័ត៌មាននៃការមកទទួលសេវា</span></span></div>
             <div class="field">
               <label for="visitDate">Visit Date <span class="kh" lang="km">កាលបរិច្ឆេទទទួលសេវា</span></label>
-              <input id="visitDate" name="visitDate" type="date" autocomplete="off">
+              <input id="visitDate" name="visitDate" type="date" autocomplete="off" required>
             </div>
             <!-- Retains the Apps Script column position after Branch Visited was removed. -->
             <input type="hidden" name="branch" value="">
@@ -235,11 +235,11 @@
               <fieldset>
                 <legend>Overall Rating <span class="kh" lang="km">ការវាយតម្លៃទូទៅ</span></legend>
                 <div class="rating-box" role="radiogroup" aria-label="Overall rating / ការវាយតម្លៃទូទៅ">
-                  <label class="rating-option" aria-label="1 star"><input type="radio" name="rating" value="1" required><span class="star" aria-hidden="true">★</span></label>
-                  <label class="rating-option" aria-label="2 stars"><input type="radio" name="rating" value="2"><span class="star" aria-hidden="true">★</span></label>
-                  <label class="rating-option" aria-label="3 stars"><input type="radio" name="rating" value="3"><span class="star" aria-hidden="true">★</span></label>
-                  <label class="rating-option" aria-label="4 stars"><input type="radio" name="rating" value="4"><span class="star" aria-hidden="true">★</span></label>
-                  <label class="rating-option" aria-label="5 stars"><input type="radio" name="rating" value="5"><span class="star" aria-hidden="true">★</span></label>
+                  <label class="rating-option" aria-label="1 star / ផ្កាយ ១"><input type="radio" name="rating" value="1" required><span class="star" aria-hidden="true">★</span></label>
+                  <label class="rating-option" aria-label="2 stars / ផ្កាយ ២"><input type="radio" name="rating" value="2"><span class="star" aria-hidden="true">★</span></label>
+                  <label class="rating-option" aria-label="3 stars / ផ្កាយ ៣"><input type="radio" name="rating" value="3"><span class="star" aria-hidden="true">★</span></label>
+                  <label class="rating-option" aria-label="4 stars / ផ្កាយ ៤"><input type="radio" name="rating" value="4"><span class="star" aria-hidden="true">★</span></label>
+                  <label class="rating-option" aria-label="5 stars / ផ្កាយ ៥"><input type="radio" name="rating" value="5"><span class="star" aria-hidden="true">★</span></label>
                 </div>
                 <p class="rating-hint">Tap a star to rate / <span class="kh" lang="km">ចុចផ្កាយដើម្បីវាយតម្លៃ</span></p>
               </fieldset>
