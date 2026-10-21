@@ -1,16 +1,19 @@
 # Connect the feedback form to its Google Sheet
 
-The matching Apps Script receiver is in [Code.gs](./Code.gs). It writes submissions to the existing **SKYM BY KIRISAN Customer Feedback** spreadsheet:
+The feedback form sends these fields: full name, phone, visit date, service, overall rating, and additional feedback. The receiver is in [Code.gs](./Code.gs) and writes to the existing **SKYM BY KIRISAN Customer Feedback** spreadsheet:
 
 https://docs.google.com/spreadsheets/d/1tZkIoJOnBCQuGisoq0zSHEsxIqd3QrEPyJ7nFxkDf9w/edit
 
-## Deploy once in Google Apps Script
+## Repair the current Web App
 
-1. Open [script.google.com](https://script.google.com/) and create a new project.
-2. Replace the starter code with the contents of `Code.gs`.
-3. Choose **Deploy → New deployment → Web app**.
-4. Set **Execute as** to **Me** and access to **Anyone**, then deploy and authorize the requested Sheets access.
-5. Copy the deployed web app URL ending in `/exec`.
-6. Replace `YOUR_WEB_APP_URL_HERE` in `index.html` with that URL and commit the change.
+The receiver was rejecting submissions because it expected an old English-only 33-column header row. The live sheet has bilingual headers and blank spacer columns. The updated `Code.gs` accepts the current headers and preserves the existing column layout.
 
-The sheet already has the expected 33 headers. The receiver verifies them before appending so a mismatch will not silently write data into the wrong columns. This form currently sends the branch as **Vivean Ekreach**.
+1. Open the Apps Script project that created the current Web App URL.
+2. Replace the contents of `Code.gs` with the updated file from this repository and save.
+3. Choose **Deploy → Manage deployments**, click the edit pencil on the current Web App deployment, select **New version**, then click **Deploy**.
+4. Keep **Execute as: Me** and **Who has access: Anyone**. Approve the Sheets permission prompt if shown.
+5. Keep the same `/exec` URL. The website already points to it.
+
+The web page now checks the JSON result before showing the success message, so an Apps Script error will be visible instead of appearing as a successful submission.
+
+If the original Apps Script project is unavailable, create a new project, paste in `Code.gs`, deploy as a Web App with the settings above, then replace the `scriptURL` in `index.html` with the new `/exec` URL.
