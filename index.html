@@ -96,6 +96,11 @@
     .topic-rating-legend { margin: 0 0 6px; color: var(--muted); font-size: 10px; font-weight: 500; text-align: center; }
     .topic-rating-box { display: flex; justify-content: center; gap: 5px; margin-bottom: 12px; }
     .topic-feedback-card textarea { min-height: 78px; background: #fff; }
+    .smart-prompt-panel { margin: 0 0 13px; }
+    .smart-prompt-title { margin: 0 0 8px; color: var(--muted); font-size: 10px; font-weight: 600; line-height: 1.6; }
+    .smart-prompt-list { display: flex; flex-wrap: wrap; gap: 7px; }
+    .smart-prompt-chip { min-height: 34px; padding: 7px 10px; border: 1px solid #d7e4fb; border-radius: 999px; color: #315b98; background: #f5f9ff; font: inherit; font-size: 10px; line-height: 1.4; cursor: pointer; }
+    .smart-prompt-chip:hover, .smart-prompt-chip:focus-visible { border-color: #2563eb; background: #eaf2ff; outline: 0; }
     .feedback-private { padding: 12px 14px; border: 1px solid #eee8dc; border-radius: 7px; background: #fbfaf7; }
     .submit-button {
       width: 100%; min-height: 51px; margin-top: 5px; padding: 13px 20px;
@@ -271,11 +276,53 @@
         star.setAttribute('aria-hidden', 'true');
         star.textContent = '★';
         option.append(radio, star);
-        radio.addEventListener('change', () => refreshRating(box));
+        radio.addEventListener('change', () => {
+          refreshRating(box);
+          const card = box.closest('.topic-feedback-card');
+          if (card) updateSmartFeedback(card);
+        });
         box.append(option);
       }
       fieldset.append(box);
       return fieldset;
+    }
+
+    function updateSmartFeedback(card) {
+      const rating = Number(card.querySelector('.topic-rating-box input:checked')?.value || 0);
+      const panel = card.querySelector('.smart-prompt-panel');
+      const list = card.querySelector('.smart-prompt-list');
+      list.replaceChildren();
+      panel.hidden = rating === 0;
+      if (!rating) return;
+
+      const prompts = rating <= 2
+        ? [
+            'Please improve this area. / សូមកែលម្អផ្នែកនេះ។',
+            'Here is what happened. / នេះជាអ្វីដែលបានកើតឡើង។'
+          ]
+        : rating === 3
+          ? [
+              'This was okay, but could be better. / ចំណុចនេះមធ្យម ប៉ុន្តែអាចធ្វើឲ្យកាន់តែល្អ។',
+              'What would improve it? / តើអ្វីអាចធ្វើឲ្យកាន់តែល្អ?'
+            ]
+          : [
+              'I was happy with this part. / ខ្ញុំពេញចិត្តនឹងផ្នែកនេះ។',
+              'Please keep doing this. / សូមបន្តរក្សាចំណុចល្អនេះ។'
+            ];
+
+      for (const prompt of prompts) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'smart-prompt-chip';
+        button.textContent = '+ ' + prompt;
+        button.addEventListener('click', () => {
+          const textarea = card.querySelector('textarea');
+          const current = textarea.value.trim();
+          if (!current.includes(prompt)) textarea.value = current ? `${current}\n${prompt}` : prompt;
+          textarea.focus();
+        });
+        list.append(button);
+      }
     }
 
     function updateTopicFeedback() {
@@ -297,7 +344,16 @@
         detail.name = `topicFeedback_${topic}`;
         detail.rows = 2;
         detail.placeholder = 'Tell us more about this part of your visit / សូមប្រាប់យើងបន្ថែមអំពីចំណុចនេះ';
-        card.append(detailLabel, detail);
+        const promptPanel = document.createElement('div');
+        promptPanel.className = 'smart-prompt-panel';
+        promptPanel.hidden = true;
+        const promptTitle = document.createElement('p');
+        promptTitle.className = 'smart-prompt-title';
+        promptTitle.textContent = 'Smart prompts based on your rating / ឃ្លាជំនួយផ្អែកលើការវាយតម្លៃ';
+        const promptList = document.createElement('div');
+        promptList.className = 'smart-prompt-list';
+        promptPanel.append(promptTitle, promptList);
+        card.append(promptPanel, detailLabel, detail);
         topicFeedbackCards.append(card);
       }
     }
