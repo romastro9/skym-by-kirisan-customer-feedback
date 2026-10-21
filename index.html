@@ -230,6 +230,12 @@
     const brandHeader = document.getElementById('brandHeader');
     const successMessage = document.getElementById('successMessage');
     const topicFeedbackCards = document.getElementById('topicFeedbackCards');
+    const visitDateInput = document.getElementById('visitDate');
+    if (visitDateInput && !visitDateInput.value) {
+      const now = new Date();
+      const localToday = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+      visitDateInput.value = localToday;
+    }
 
     function refreshRating(group) {
       const selected = Number(group.querySelector('input:checked')?.value || 0);
