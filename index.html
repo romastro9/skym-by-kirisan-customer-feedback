@@ -20,7 +20,7 @@
       --paper: #fff;
       --background: #f8f6f2;
       --focus: rgba(197, 160, 89, .2);
-      --shadow: 0 24px 70px rgba(54, 47, 35, .10), 0 4px 14px rgba(54, 47, 35, .04);
+      --shadow: 0 14px 42px rgba(54, 47, 35, .08);
     }
     * { box-sizing: border-box; }
     body {
@@ -39,7 +39,7 @@
     }
     .page-shell { width: min(100%, 620px); }
     .brand { text-align: center; margin: 0 0 24px; }
-    .brand-logo { display: block; width: min(280px, 82vw); height: auto; margin: 0 auto 4px; padding: 9px 13px; border: 1px solid rgba(197,160,89,.32); border-radius: 10px; background: #fff; box-shadow: 0 8px 24px rgba(54,47,35,.06); }
+    .brand-logo { display: block; width: min(250px, 76vw); height: auto; margin: 0 auto 7px; padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; mix-blend-mode: multiply; }
     .brand-name { margin: 0; color: var(--gold-deep); font-size: 10px; font-weight: 600; letter-spacing: .28em; }
     .brand-tagline { margin: 8px 0 0; color: var(--muted); font-size: 12px; line-height: 1.8; }
     .kh { display: block; margin-top: 2px; font-family: 'Suwannaphum', sans-serif; font-weight: 400; letter-spacing: 0; }
@@ -47,9 +47,9 @@
       overflow: hidden; background: var(--paper); border: 1px solid rgba(225,219,207,.8);
       border-top: 4px solid var(--gold); border-radius: 14px; box-shadow: var(--shadow);
     }
-    .card-inner { padding: 38px 44px 42px; }
+    .card-inner { padding: 32px 38px 36px; }
     .form-heading { margin: 0 0 9px; text-align: center; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(27px, 5vw, 34px); font-weight: 400; letter-spacing: -.025em; }
-    .form-subtitle { max-width: 420px; margin: 0 auto 30px; color: var(--muted); text-align: center; font-size: 13px; line-height: 1.85; }
+    .form-subtitle { max-width: 420px; margin: 0 auto 24px; color: var(--muted); text-align: center; font-size: 13px; line-height: 1.85; }
     .field { margin: 0 0 20px; }
     label, legend { display: block; margin: 0 0 8px; font-size: 12px; font-weight: 600; letter-spacing: .015em; }
     label .kh, legend .kh { display: inline; margin-left: 5px; color: var(--muted); font-size: 12px; font-weight: 400; }
@@ -66,12 +66,12 @@
     .select-wrap::after { content: ''; position: absolute; right: 17px; top: 19px; width: 8px; height: 8px; border-right: 1.5px solid #817b70; border-bottom: 1.5px solid #817b70; transform: rotate(45deg); pointer-events: none; }
     textarea { min-height: 112px; resize: vertical; line-height: 1.65; }
     fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
-    .rating-box { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 10px 0 6px; }
-    .rating-option { position: relative; display: inline-flex; cursor: pointer; }
-    .rating-option input { position: absolute; width: 1px; height: 1px; opacity: 0; }
-    .star { color: #ded9cf; font-size: 35px; line-height: 1; transition: color .15s ease, transform .15s ease; }
-    .rating-option:hover .star, .rating-option:has(input:checked) .star { color: var(--gold); }
-    .rating-option:hover .star { transform: scale(1.12); }
+    .rating-box { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 0 6px; }
+    .rating-option { position: relative; display: inline-flex; cursor: pointer; padding: 3px; border-radius: 6px; touch-action: manipulation; }
+    .rating-option input { position: absolute; width: 1px; height: 1px; margin: 0; opacity: 0; }
+    .star { color: #ded9cf; font-size: 35px; line-height: 1; transition: color .15s ease, transform .15s ease; user-select: none; }
+    .rating-option .star.selected, .rating-option:hover .star { color: var(--gold); }
+    .rating-option:hover .star { transform: scale(1.10); }
     .rating-option input:focus-visible + .star { outline: 3px solid var(--focus); outline-offset: 4px; border-radius: 3px; }
     .rating-hint { margin: 2px 0 0; text-align: center; color: var(--muted); font-size: 11px; }
     .detail-heading { margin: 0 0 7px; font-size: 12px; font-weight: 600; }
@@ -87,11 +87,14 @@
     .topic-chip .kh { margin: 1px 0 0; color: var(--muted); font-size: 10px; }
     .topic-choice input:checked + .topic-chip { border-color: var(--gold); background: #fcf8ef; box-shadow: 0 0 0 2px var(--focus); }
     .topic-choice input:focus-visible + .topic-chip { outline: 3px solid var(--focus); outline-offset: 2px; }
-    .smart-feedback { margin-top: 14px; padding: 13px; border: 1px solid #eee8dc; border-radius: 8px; background: #fbfaf7; }
-    .smart-title { margin: 0 0 9px; font-size: 11px; font-weight: 600; }
-    .suggestion-list { display: flex; flex-wrap: wrap; gap: 7px; }
-    .suggestion-chip { padding: 7px 10px; border: 1px solid #e4dccd; border-radius: 999px; color: #615b51; background: #fff; font: inherit; font-size: 10px; cursor: pointer; }
-    .suggestion-chip:hover, .suggestion-chip:focus-visible { border-color: var(--gold); color: var(--gold-deep); outline: 0; }
+    .topic-feedback-cards { display: grid; gap: 12px; margin-top: 14px; }
+    .topic-feedback-card { padding: 15px; border: 1px solid #eee8dc; border-radius: 8px; background: #fbfaf7; }
+    .topic-feedback-card .topic-chip { min-height: 0; margin: 0 0 12px; padding: 0; border: 0; background: transparent; font-size: 12px; font-weight: 600; }
+    .topic-feedback-card .topic-chip .kh { font-size: 11px; }
+    .topic-rating-legend { margin: 0 0 6px; color: var(--muted); font-size: 10px; font-weight: 500; text-align: center; }
+    .topic-rating-box { display: flex; justify-content: center; gap: 5px; margin-bottom: 12px; }
+    .topic-feedback-card textarea { min-height: 78px; background: #fff; }
+    .feedback-private { padding: 12px 14px; border: 1px solid #eee8dc; border-radius: 7px; background: #fbfaf7; }
     .submit-button {
       width: 100%; min-height: 51px; margin-top: 5px; padding: 13px 20px;
       border: 0; border-radius: 7px; color: #fff; background: var(--gold);
@@ -101,7 +104,7 @@
     .submit-button:hover:not(:disabled) { background: var(--gold-deep); transform: translateY(-1px); box-shadow: 0 8px 20px rgba(169,130,63,.22); }
     .submit-button:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
     .submit-button:disabled { cursor: wait; opacity: .76; }
-    .privacy-note { margin: 15px 0 0; text-align: center; color: #8d887e; font-size: 10px; line-height: 1.7; }
+    .privacy-note { margin: 14px 0 0; text-align: center; color: #77736c; font-size: 10px; line-height: 1.75; }
     .success { display: none; padding: 60px 34px 66px; text-align: center; }
     .success.show { display: block; }
     .success-icon { width: 58px; height: 58px; margin: 0 auto 22px; display: grid; place-items: center; border: 1px solid rgba(197,160,89,.52); border-radius: 50%; color: var(--gold-deep); font-size: 25px; }
@@ -118,6 +121,7 @@
       .field { margin-bottom: 18px; }
       .star { font-size: 33px; }
       .topic-grid { grid-template-columns: 1fr; }
+      .topic-feedback-card { padding: 13px; }
     }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }
   </style>
@@ -189,18 +193,15 @@
                 <label class="topic-choice"><input type="checkbox" name="feedbackTopics" value="Aftercare & follow-up" data-topic="aftercare"><span class="topic-chip">Aftercare & follow-up<span class="kh" lang="km">ការថែទាំ និងតាមដានបន្ទាប់</span></span></label>
                 <label class="topic-choice"><input type="checkbox" name="feedbackTopics" value="Other" data-topic="other"><span class="topic-chip">Other<span class="kh" lang="km">ផ្សេងៗ</span></span></label>
               </div>
-              <div class="smart-feedback" id="smartFeedback" hidden>
-                <p class="smart-title">Quick details — tap to add to your comment <span class="kh" lang="km">ចំណុចលម្អិត — ចុចដើម្បីបន្ថែមក្នុងមតិយោបល់</span></p>
-                <div class="suggestion-list" id="suggestionList"></div>
-              </div>
+              <div class="topic-feedback-cards" id="topicFeedbackCards" aria-live="polite"></div>
             </fieldset>
           </div>
           <div class="field">
             <label for="feedback">Additional Feedback <span class="kh" lang="km">មតិយោបល់បន្ថែម</span></label>
-            <textarea id="feedback" name="feedback" placeholder="Tell us what went well or how we can improve..." rows="4"></textarea>
+            <textarea id="feedback" name="feedback" placeholder="Anything else you would like us to know? / តើអ្នកមានមតិយោបល់ផ្សេងទៀតទេ?" rows="3"></textarea>
           </div>
           <button class="submit-button" id="submitButton" type="submit">Submit Feedback <span class="kh" lang="km" style="display:inline;margin:0 0 0 5px;color:#fff">បញ្ជូនមតិយោបល់</span></button>
-          <p class="privacy-note">Your feedback is shared privately with our clinic team.<span class="kh" lang="km">មតិយោបល់របស់អ្នកនឹងត្រូវបានចែករំលែកដោយសម្ងាត់ជាមួយក្រុមការងារគ្លីនិករបស់យើង។</span></p>
+          <p class="privacy-note">Your answers are not displayed on this website. They are sent to the clinic for review.<span class="kh" lang="km">ចម្លើយរបស់អ្នកមិនត្រូវបានបង្ហាញនៅលើគេហទំព័រនេះទេ។ វានឹងត្រូវបានបញ្ជូនទៅគ្លីនិកដើម្បីពិនិត្យ។</span></p>
         </form>
       </div>
       <div class="success" id="successMessage" role="status" aria-live="polite">
@@ -219,52 +220,102 @@
     const formContent = document.getElementById('formContent');
     const brandHeader = document.getElementById('brandHeader');
     const successMessage = document.getElementById('successMessage');
-    const feedbackTextarea = document.getElementById('feedback');
-    const smartFeedback = document.getElementById('smartFeedback');
-    const suggestionList = document.getElementById('suggestionList');
+    const topicFeedbackCards = document.getElementById('topicFeedbackCards');
 
-    const feedbackSuggestions = {
-      welcome: ['Welcomed warmly / ទទួលស្វាគមន៍យ៉ាងកក់ក្តៅ', 'Check-in was smooth / ការចុះឈ្មោះរហ័ស និងងាយស្រួល', 'Please improve the welcome / សូមកែលម្អការទទួលស្វាគមន៍'],
-      staff: ['Team was friendly / បុគ្គលិករួសរាយរាក់ទាក់', 'Team was attentive / បុគ្គលិកយកចិត្តទុកដាក់', 'Please improve staff communication / សូមកែលម្អការប្រាស្រ័យទាក់ទង'],
-      consultation: ['Advice was clear / ការណែនាំច្បាស់លាស់', 'I felt listened to / មានអារម្មណ៍ថាបានស្តាប់យកចិត្តទុកដាក់', 'I would like more explanation / ខ្ញុំចង់បានការពន្យល់បន្ថែម'],
-      waiting: ['Wait was reasonable / រយៈពេលរង់ចាំសមរម្យ', 'I was seen on time / បានទទួលសេវាតាមពេលវេលា', 'Please reduce the waiting time / សូមកាត់បន្ថយពេលរង់ចាំ'],
-      cleanliness: ['Clinic felt clean / គ្លីនិកស្អាត', 'Room felt comfortable / បន្ទប់មានផាសុកភាព', 'Please improve cleanliness / សូមកែលម្អអនាម័យ'],
-      comfort: ['I felt comfortable / មានអារម្មណ៍ស្រួល', 'My privacy was respected / ឯកជនភាពត្រូវបានគោរព', 'Please improve comfort or privacy / សូមកែលម្អផាសុកភាព ឬឯកជនភាព'],
-      treatment: ['Treatment was gentle / ការព្យាបាលទន់ភ្លន់', 'The process was explained / បានពន្យល់អំពីដំណើរការ', 'I would like clearer aftercare guidance / ខ្ញុំចង់បានការណែនាំថែទាំបន្ទាប់ច្បាស់ជាងនេះ'],
-      results: ['I am happy with the result / ខ្ញុំពេញចិត្តនឹងលទ្ធផល', 'I would like a follow-up review / ខ្ញុំចង់បានការតាមដានលទ្ធផល', 'I have a question about my result / ខ្ញុំមានសំណួរអំពីលទ្ធផល'],
-      price: ['Price was explained clearly / បានពន្យល់តម្លៃច្បាស់លាស់', 'Good value for the service / សេវាកម្មសមនឹងតម្លៃ', 'Please explain pricing in more detail / សូមពន្យល់តម្លៃឱ្យលម្អិតជាងនេះ'],
-      aftercare: ['Follow-up was helpful / ការតាមដានមានប្រយោជន៍', 'Aftercare instructions were clear / ការណែនាំថែទាំបន្ទាប់ច្បាស់លាស់', 'I would appreciate more follow-up / សូមជួយតាមដានបន្ថែម'],
-      other: ['Please contact me about this / សូមទាក់ទងខ្ញុំអំពីចំណុចនេះ']
-    };
-
-    function updateSmartFeedback() {
-      const selectedTopics = [...document.querySelectorAll('#feedbackTopics input:checked')];
-      suggestionList.replaceChildren();
-      smartFeedback.hidden = selectedTopics.length === 0;
-      const uniqueSuggestions = new Set(selectedTopics.flatMap((input) => feedbackSuggestions[input.dataset.topic] || []));
-      uniqueSuggestions.forEach((suggestion) => {
-        const chip = document.createElement('button');
-        chip.type = 'button';
-        chip.className = 'suggestion-chip';
-        chip.textContent = '+ ' + suggestion;
-        chip.addEventListener('click', () => {
-          const current = feedbackTextarea.value.trim();
-          if (!current.includes(suggestion)) {
-            feedbackTextarea.value = current ? `${current}\n${suggestion}` : suggestion;
-          }
-          feedbackTextarea.focus();
-        });
-        suggestionList.append(chip);
+    function refreshRating(group) {
+      const selected = Number(group.querySelector('input:checked')?.value || 0);
+      group.querySelectorAll('.rating-option').forEach((option) => {
+        const value = Number(option.querySelector('input').value);
+        option.querySelector('.star').classList.toggle('selected', value <= selected);
       });
     }
 
+    function makeRating(name, label, required = false) {
+      const fieldset = document.createElement('fieldset');
+      fieldset.className = 'topic-rating-fieldset';
+      const legend = document.createElement('legend');
+      legend.className = 'topic-rating-legend';
+      legend.textContent = label;
+      fieldset.append(legend);
+      const box = document.createElement('div');
+      box.className = 'topic-rating-box';
+      box.setAttribute('role', 'radiogroup');
+      box.setAttribute('aria-label', label);
+      for (let value = 1; value <= 5; value += 1) {
+        const option = document.createElement('label');
+        option.className = 'rating-option';
+        const radio = document.createElement('input');
+        radio.type = 'radio';
+        radio.name = name;
+        radio.value = String(value);
+        radio.required = required && value === 1;
+        radio.setAttribute('aria-label', `${value} ${value === 1 ? 'star' : 'stars'} / ${value} ផ្កាយ`);
+        const star = document.createElement('span');
+        star.className = 'star';
+        star.setAttribute('aria-hidden', 'true');
+        star.textContent = '★';
+        option.append(radio, star);
+        box.append(option);
+      }
+      fieldset.append(box);
+      return fieldset;
+    }
+
+    function updateTopicFeedback() {
+      const selected = [...document.querySelectorAll('#feedbackTopics input:checked')];
+      topicFeedbackCards.replaceChildren();
+      for (const checkbox of selected) {
+        const topic = checkbox.dataset.topic;
+        const sourceLabel = checkbox.closest('label').querySelector('.topic-chip').cloneNode(true);
+        const card = document.createElement('section');
+        card.className = 'topic-feedback-card';
+        card.append(sourceLabel);
+        card.append(makeRating(`topicRating_${topic}`, 'Rate this area / វាយតម្លៃផ្នែកនេះ', true));
+        const detailLabel = document.createElement('label');
+        const detailId = `topicDetail_${topic}`;
+        detailLabel.htmlFor = detailId;
+        detailLabel.textContent = 'Additional Feedback / មតិយោបល់បន្ថែម';
+        const detail = document.createElement('textarea');
+        detail.id = detailId;
+        detail.name = `topicFeedback_${topic}`;
+        detail.rows = 2;
+        detail.placeholder = 'Tell us more about this part of your visit / សូមប្រាប់យើងបន្ថែមអំពីចំណុចនេះ';
+        card.append(detailLabel, detail);
+        topicFeedbackCards.append(card);
+      }
+    }
+
     document.querySelectorAll('#feedbackTopics input').forEach((input) => {
-      input.addEventListener('change', updateSmartFeedback);
+      input.addEventListener('change', updateTopicFeedback);
+    });
+
+    feedbackForm.addEventListener('change', (event) => {
+      const group = event.target.closest('.rating-box, .topic-rating-box');
+      if (group) refreshRating(group);
+    });
+
+    feedbackForm.addEventListener('pointerover', (event) => {
+      const option = event.target.closest('.rating-option');
+      const group = option?.closest('.rating-box, .topic-rating-box');
+      if (!group || !option) return;
+      const hoverValue = Number(option.querySelector('input').value);
+      group.querySelectorAll('.rating-option').forEach((item) => {
+        item.querySelector('.star').classList.toggle('selected', Number(item.querySelector('input').value) <= hoverValue);
+      });
+    });
+
+    feedbackForm.addEventListener('pointerout', (event) => {
+      const group = event.target.closest('.rating-box, .topic-rating-box');
+      if (group && !group.contains(event.relatedTarget)) refreshRating(group);
     });
 
     feedbackForm.addEventListener('submit', async (event) => {
       event.preventDefault();
       if (!feedbackForm.reportValidity()) return;
+      if (!scriptURL || scriptURL === 'YOUR_WEB_APP_URL_HERE') {
+        alert('Feedback submission is not configured yet. Please contact the clinic. / ការបញ្ជូនមតិយោបល់មិនទាន់ត្រូវបានកំណត់ទេ។ សូមទាក់ទងគ្លីនិក។');
+        return;
+      }
 
       const originalButtonHTML = submitButton.innerHTML;
       submitButton.disabled = true;
@@ -277,11 +328,9 @@
           body: new FormData(feedbackForm)
         });
         if (!response.ok) throw new Error(`Submission failed (${response.status})`);
-
         formContent.hidden = true;
         brandHeader.hidden = true;
         successMessage.classList.add('show');
-        successMessage.focus?.();
       } catch (error) {
         console.error('Feedback submission error:', error);
         alert('We could not send your feedback. Please check your connection and try again. / មិនអាចបញ្ជូនមតិយោបល់របស់អ្នកបានទេ។ សូមពិនិត្យការតភ្ជាប់អ៊ីនធឺណិត ហើយព្យាយាមម្ដងទៀត។');
