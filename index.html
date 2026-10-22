@@ -194,28 +194,12 @@
 
         <form id="feedbackForm">
 
-          <section class="form-step" data-step="0" aria-labelledby="stepTitle0">
-            <div class="form-section-label" id="stepTitle0"><span>About you / <span class="kh" lang="km">ព័ត៌មានរបស់អ្នក</span></span></div>
-            <div class="field">
-              <label for="fullName">Full Name <span class="kh" lang="km">ឈ្មោះពេញ</span></label>
-              <input id="fullName" name="fullName" type="text" autocomplete="name" placeholder="Enter your full name / បញ្ចូលឈ្មោះពេញ" required>
-            </div>
-            <div class="field">
-              <label for="phone">Phone Number <span class="kh" lang="km">លេខទូរស័ព្ទ</span></label>
-              <input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="Enter your phone number / បញ្ចូលលេខទូរស័ព្ទ" required>
-            </div>
-            <!-- Keeps the existing Apps Script column order stable. Position is no longer collected. -->
-            <input type="hidden" name="position" value="">
-          </section>
-
           <section class="form-step" data-step="1" aria-labelledby="stepTitle1">
             <div class="form-section-label" id="stepTitle1"><span>Your visit / <span class="kh" lang="km">ព័ត៌មាននៃការមកទទួលសេវា</span></span></div>
             <div class="field">
               <label for="visitDate">Visit Date <span class="kh" lang="km">កាលបរិច្ឆេទទទួលសេវា</span></label>
               <input id="visitDate" name="visitDate" type="date" autocomplete="off" required>
             </div>
-            <!-- Retains the Apps Script column position after Branch Visited was removed. -->
-            <input type="hidden" name="branch" value="">
             <div class="field">
               <label for="service">Service Received <span class="kh" lang="km">សេវាកម្មដែលបានទទួល</span></label>
               <div class="select-wrap">
