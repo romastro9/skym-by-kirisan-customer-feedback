@@ -193,6 +193,10 @@
         <p class="form-subtitle">Your experience matters to us. Please take a moment to share your feedback.<span class="kh" lang="km">បទពិសោធន៍របស់អ្នកមានសារៈសំខាន់ចំពោះយើង។ សូមចំណាយពេលបន្តិចដើម្បីចែករំលែកមតិយោបល់។</span></p>
 
         <form id="feedbackForm">
+          <!-- Legacy fields keep the currently deployed receiver compatible until it is redeployed.
+               They are fixed placeholders, never customer-provided information. The updated receiver ignores them. -->
+          <input type="hidden" name="fullName" value="Anonymous">
+          <input type="hidden" name="phone" value="Not collected">
 
           <section class="form-step" data-step="1" aria-labelledby="stepTitle1">
             <div class="form-section-label" id="stepTitle1"><span>Your visit / <span class="kh" lang="km">ព័ត៌មាននៃការមកទទួលសេវា</span></span></div>
