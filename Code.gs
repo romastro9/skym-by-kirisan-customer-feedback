@@ -1,6 +1,6 @@
 /**
- * SKYM By Kirisan — anonymous customer feedback receiver
- * Writes feedback without collecting customer names or phone numbers.
+ * SKYM By Kirisan — anonymous customer feedback receiver.
+ * Name and phone columns remain as blank legacy columns in Sheet1.
  */
 const SPREADSHEET_ID = '1tZkIoJOnBCQuGisoq0zSHEsxIqd3QrEPyJ7nFxkDf9w';
 const RESPONSE_SHEET_NAME = 'Sheet1';
@@ -28,11 +28,12 @@ function doPost(e) {
       throw new Error('Required feedback fields are missing or invalid.');
     }
 
-    // 31 columns: timestamp, legacy spacer, visit date, spacer, service,
-    // overall rating, smart selection, additional feedback, completed topics,
-    // followed by the 11 topic rating/comment pairs.
+    // Keep the current 33-column Sheet layout stable. Name and phone cells (B:C)
+    // are intentionally blank for every new response.
     const row = [
       new Date(),
+      '',
+      '',
       '',
       visitDate,
       '',
@@ -43,7 +44,7 @@ function doPost(e) {
       ''
     ];
     for (const topic of TOPICS) row.push('', '');
-    if (row.length !== 31) throw new Error('Unexpected response row width.');
+    if (row.length !== 33) throw new Error('Unexpected response row width.');
 
     lock.waitLock(10000);
     lockAcquired = true;
@@ -52,21 +53,21 @@ function doPost(e) {
     const sheet = spreadsheet.getSheetByName(RESPONSE_SHEET_NAME);
     if (!sheet) throw new Error('Sheet tab "' + RESPONSE_SHEET_NAME + '" was not found.');
 
-    const headers = sheet.getRange(1, 1, 1, 8).getDisplayValues()[0];
+    const headers = sheet.getRange(1, 1, 1, 10).getDisplayValues()[0];
     const requiredHeaders = [
       [0, /submitted at/i],
-      [2, /visit date/i],
-      [4, /service/i],
-      [5, /overall rating/i],
-      [7, /additional feedback/i]
+      [4, /visit date/i],
+      [6, /service/i],
+      [7, /overall rating/i],
+      [9, /additional feedback/i]
     ];
     for (const entry of requiredHeaders) {
       if (!entry[1].test(String(headers[entry[0]] || ''))) {
         throw new Error('Required Sheet header is missing at column ' + (entry[0] + 1) + '.');
       }
     }
-    if (sheet.getMaxColumns() < 31) {
-      sheet.insertColumnsAfter(sheet.getMaxColumns(), 31 - sheet.getMaxColumns());
+    if (sheet.getMaxColumns() < 33) {
+      sheet.insertColumnsAfter(sheet.getMaxColumns(), 33 - sheet.getMaxColumns());
     }
 
     sheet.appendRow(row);
