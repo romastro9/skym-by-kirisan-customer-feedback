@@ -1,6 +1,6 @@
 /**
- * SKYM By Kirisan — Customer Feedback receiver
- * Writes the current customer-facing form fields to Sheet1.
+ * SKYM By Kirisan — anonymous customer feedback receiver
+ * Writes feedback without collecting customer names or phone numbers.
  */
 const SPREADSHEET_ID = '1tZkIoJOnBCQuGisoq0zSHEsxIqd3QrEPyJ7nFxkDf9w';
 const RESPONSE_SHEET_NAME = 'Sheet1';
@@ -19,24 +19,20 @@ function doPost(e) {
   try {
     if (!e || !e.parameter) throw new Error('No form data was received.');
 
-    const fullName = param_(e, 'fullName').trim();
-    const phone = param_(e, 'phone').trim();
     const visitDate = param_(e, 'visitDate').trim();
     const service = param_(e, 'service').trim();
     const rating = Number(param_(e, 'rating'));
     const feedback = param_(e, 'feedback').trim();
 
-    if (!fullName || !phone || !visitDate || !service || rating < 1 || rating > 5) {
-      throw new Error('Required form fields are missing or invalid.');
+    if (!visitDate || !service || rating < 1 || rating > 5) {
+      throw new Error('Required feedback fields are missing or invalid.');
     }
 
-    // Keep the existing 33-column layout stable for the live Sheet.
-    // Position, branch, smart selection, and topic-specific fields are no longer
-    // shown on the web form, so their cells remain blank.
+    // 31 columns: timestamp, legacy spacer, visit date, spacer, service,
+    // overall rating, smart selection, additional feedback, completed topics,
+    // followed by the 11 topic rating/comment pairs.
     const row = [
       new Date(),
-      fullName,
-      phone,
       '',
       visitDate,
       '',
@@ -47,7 +43,7 @@ function doPost(e) {
       ''
     ];
     for (const topic of TOPICS) row.push('', '');
-    if (row.length !== 33) throw new Error('Unexpected response row width.');
+    if (row.length !== 31) throw new Error('Unexpected response row width.');
 
     lock.waitLock(10000);
     lockAcquired = true;
@@ -56,23 +52,21 @@ function doPost(e) {
     const sheet = spreadsheet.getSheetByName(RESPONSE_SHEET_NAME);
     if (!sheet) throw new Error('Sheet tab "' + RESPONSE_SHEET_NAME + '" was not found.');
 
-    const headers = sheet.getRange(1, 1, 1, 10).getDisplayValues()[0];
+    const headers = sheet.getRange(1, 1, 1, 8).getDisplayValues()[0];
     const requiredHeaders = [
       [0, /submitted at/i],
-      [1, /full name/i],
-      [2, /phone number/i],
-      [4, /visit date/i],
-      [6, /service/i],
-      [7, /overall rating/i],
-      [9, /additional feedback/i]
+      [2, /visit date/i],
+      [4, /service/i],
+      [5, /overall rating/i],
+      [7, /additional feedback/i]
     ];
     for (const entry of requiredHeaders) {
       if (!entry[1].test(String(headers[entry[0]] || ''))) {
         throw new Error('Required Sheet header is missing at column ' + (entry[0] + 1) + '.');
       }
     }
-    if (sheet.getMaxColumns() < 33) {
-      sheet.insertColumnsAfter(sheet.getMaxColumns(), 33 - sheet.getMaxColumns());
+    if (sheet.getMaxColumns() < 31) {
+      sheet.insertColumnsAfter(sheet.getMaxColumns(), 31 - sheet.getMaxColumns());
     }
 
     sheet.appendRow(row);
